@@ -1,17 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import "./home.scss"
+
 export default function Home() {
     return (
         <div>
-
             <section className='banner'>
                 <div className="banner-video-container">
                     <video autoPlay muted loop className="banner-video">
-                        <source src="/assets/bg.mp4" type="video/mp4" />
+                        <source src="/assets/bg.mp4" type="video/mp4"/>
                         Your browser does not support the video tag.
                     </video>
-                    <div className="banner-overlay"></div> {/* Gradient Overlay */}
+                    <div className="banner-overlay"></div>
+                    {/* Gradient Overlay */}
                     <div className="containers">
                         <div className="hom_info">
                             <div>
@@ -24,14 +25,13 @@ export default function Home() {
                                 <p>Siliguri - 5th April 2025</p>
                             </div>
                             <div className='buttons'>
-                                <Link  to="/register">Book now</Link>
+                                <Link to="/register">Book now</Link>
                                 <Link to="/register">More info</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
         </div>
     )
 }

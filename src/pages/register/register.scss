@@ -116,7 +116,7 @@ body {
       cursor: pointer;
       position: relative;
     }
-    
+
     input[type="radio"]::after {
       content: '';
       width: 12px;
@@ -129,7 +129,7 @@ body {
       transform: scale(0);
       transition: transform 0.2s ease-in-out;
     }
-    
+
     input[type="radio"]:checked::after {
       transform: scale(1);
     }
@@ -194,7 +194,6 @@ body {
     cursor: pointer;
 
 
-
     i {
       font-size: 2rem; // Icon size
       margin-bottom: 10px;
@@ -213,13 +212,14 @@ body {
       }
     }
   }
+
   img {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 150px;
     height: 150px;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     object-fit: cover; // Ensures the image fills the box without distortion
     z-index: 1;
   }
@@ -235,7 +235,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   button {
     width: 30%;
     padding: 15px;

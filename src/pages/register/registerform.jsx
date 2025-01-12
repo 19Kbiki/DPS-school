@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import React, {useState} from "react";
+import {useForm, Controller} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "./register.scss"
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -34,48 +34,48 @@ const validationSchema = yup.object().shape({
 });
 
 const RegisterForm = () => {
-    const [imagePreview, setImagePreview] = useState(null); // State to hold the image preview
+    const [imagePreview, setImagePreview] = useState(""); // State to hold the image preview
 
-    const { register, handleSubmit, control, formState: { errors }, } = useForm({ resolver: yupResolver(validationSchema), });
+    const {register, handleSubmit, control, formState: {errors},} = useForm({resolver: yupResolver(validationSchema),});
 
     const onSubmit = async (data) => {
         try {
-          const formData = new FormData();
-          formData.append("name", data.name);
-          formData.append("gender", data.gender);
-          formData.append("email", data.email);
-          formData.append("contactNumber", data.contactNumber);
-          formData.append("batch", data.batch);
-          formData.append("packge", data.packge);
-          formData.append("city", data.city);
-          formData.append("state", data.state);
-          formData.append("country", data.country);
-          formData.append("zipCode", data.zipCode);
-          formData.append("paymentScreenshot", data.paymentScreenshot[0]);
-          formData.append("password", data.password);
-    
-          // API call to submit form data
-          const response = await fetch("/api/register", {
-            method: "POST",
-            body: formData,
-          });
-    
-          if (!response.ok) {
-            throw new Error("Something went wrong while submitting the form");
-          }
-    
-          const result = await response.json();
-          console.log("result----------", result)
-    
-          if (result.success) {
-            toast.success("Registration successful!");
-          } else {
-            toast.error(result.message || "Registration failed. Please try again.");
-          }
+            const formData = new FormData();
+            formData.append("name", data.name);
+            formData.append("gender", data.gender);
+            formData.append("email", data.email);
+            formData.append("contactNumber", data.contactNumber);
+            formData.append("batch", data.batch);
+            formData.append("packge", data.packge);
+            formData.append("city", data.city);
+            formData.append("state", data.state);
+            formData.append("country", data.country);
+            formData.append("zipCode", data.zipCode);
+            formData.append("paymentScreenshot", data.paymentScreenshot[0]);
+            formData.append("password", data.password);
+
+            // API call to submit form data
+            const response = await fetch("/api/register", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("Something went wrong while submitting the form");
+            }
+
+            const result = await response.json();
+            console.log("result----------", result)
+
+            if (result.success) {
+                toast.success("Registration successful!");
+            } else {
+                toast.error(result.message || "Registration failed. Please try again.");
+            }
         } catch (error) {
             toast.error(error.message || "Registration failed. Please try again.");
         }
-      };
+    };
 
     const handleImageChange = (file) => {
         if (file) {
@@ -88,9 +88,6 @@ const RegisterForm = () => {
             setImagePreview(null);
         }
     };
-
-
-
 
 
     return (
@@ -108,31 +105,30 @@ const RegisterForm = () => {
                 <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-section">
                         <h3>Personal Details</h3>
-                        <input type="text" placeholder="Name" {...register("name")} className="form-input" />
+                        <input type="text" placeholder="Name" {...register("name")} className="form-input"/>
                         <p className="error">{errors.name?.message}</p>
-
                         <div className="gender">
                             <h5>Gender</h5>
                             <label>
-                                <input type="radio" {...register("gender")} value="male" /><span>Male</span>
+                                <input type="radio" {...register("gender")} value="male"/><span>Male</span>
                             </label>
                             <label>
-                                <input type="radio" {...register("gender")} value="female" /><span>Female</span>
+                                <input type="radio" {...register("gender")} value="female"/><span>Female</span>
                             </label>
                             <label>
-                                <input type="radio" {...register("gender")} value="other" /><span>Other</span>
+                                <input type="radio" {...register("gender")} value="other"/><span>Other</span>
                             </label>
                             <p className="error">{errors.gender?.message}</p>
                         </div>
 
                         <div className="form_wrp">
-                            <div >
-                                <input type="email" placeholder="Email" {...register("email")} className="form-input" />
+                            <div>
+                                <input type="email" placeholder="Email" {...register("email")} className="form-input"/>
                                 <p className="error">{errors.email?.message}</p>
                             </div>
                             <div>
-
-                                <input type="text" placeholder="Contact Number" {...register("contactNumber")} className="form-input" />
+                                <input type="text" placeholder="Contact Number" {...register("contactNumber")}
+                                       className="form-input"/>
                                 <p className="error">{errors.contactNumber?.message}</p>
                             </div>
 
@@ -144,10 +140,10 @@ const RegisterForm = () => {
                         <h3>Batch</h3>
                         <div className="gender">
                             <label>
-                                <input type="radio" {...register("batch")} value="2007" /> 2007
+                                <input type="radio" {...register("batch")} value="2007"/> 2007
                             </label>
                             <label>
-                                <input type="radio" {...register("batch")} value="2008" /> 2008
+                                <input type="radio" {...register("batch")} value="2008"/> 2008
                             </label>
                             <p className="error">{errors.batch?.message}</p>
 
@@ -159,26 +155,28 @@ const RegisterForm = () => {
                         <h3>Address</h3>
                         <div className="form_wrp">
                             <div>
-                                <input type="text" placeholder="City *" {...register("city")} className="form-input" />
+                                <input type="text" placeholder="City *" {...register("city")} className="form-input"/>
                                 <p className="error">{errors.city?.message}</p>
 
                             </div>
                             <div>
-                                <input type="text" placeholder="State" {...register("state")} className="form-input" />
+                                <input type="text" placeholder="State" {...register("state")} className="form-input"/>
                                 <p className="error">{errors.state?.message}</p>
 
                             </div>
 
                             <div>
 
-                                <input type="text" placeholder="Country" {...register("country")} className="form-input" />
+                                <input type="text" placeholder="Country" {...register("country")}
+                                       className="form-input"/>
                                 <p className="error">{errors.country?.message}</p>
                             </div>
 
 
                             <div>
 
-                                <input type="text" placeholder="Zip Code" {...register("zipCode")} className="form-input" />
+                                <input type="text" placeholder="Zip Code" {...register("zipCode")}
+                                       className="form-input"/>
                                 <p className="error">{errors.zipCode?.message}</p>
                             </div>
                         </div>
@@ -192,17 +190,20 @@ const RegisterForm = () => {
                             <div className="payment-option">
                                 <h5>Bank Transfer</h5>
                                 <ul>
-                                    <li>Account Number: 1234567890</li>
-                                    <li>IFSC Code: ABCD12345</li>
-                                    <li>Bank Name: XYZ Bank</li>
+                                    <li><strong>Bank Name:</strong> BANK OF BARODA</li>
+                                    <li><strong>IFSC Code:</strong> BARB0AMBARI</li>
+                                    <li><strong>Branch Name:</strong> AMBARI,GUWAHATI</li>
+                                    <li><strong>Account Type:</strong> Current A/C</li>
+                                    <li><strong>Account Number:</strong> 39010200000385</li>
+                                    <li><strong>Name:</strong> DHARMARAJ KALITA</li>
                                 </ul>
                             </div>
 
                             <div className="payment-option">
+                                {/*TODO: Add UPI IMAGE ID*/}
                                 <h5>UPI Payment</h5>
                                 <ul>
-                                    <li>UPI ID: 12830192380192@ybl</li>
-
+                                    <li><strong>UPI ID:</strong>tuman111999-3@okaxis</li>
                                 </ul>
                             </div>
                         </div>
@@ -215,10 +216,10 @@ const RegisterForm = () => {
                         <h3>Packge</h3>
                         <div className="gender">
                             <label>
-                                <input type="radio" {...register("packge")} value="4000" /> 4000 INR (Event)
+                                <input type="radio" {...register("packge")} value="4000"/> 4000 INR (Event)
                             </label>
                             <label>
-                                <input type="radio" {...register("packge")} value="6500" /> 6500 INR (Event + Stay)
+                                <input type="radio" {...register("packge")} value="6500"/> 6500 INR (Event + Stay)
 
                             </label>
                             <p className="error">{errors.packge?.message}</p>
@@ -227,20 +228,20 @@ const RegisterForm = () => {
                     </div>
 
                     <label htmlFor="payment-screenshot" className={`upload-box ${imagePreview ? "with-image" : ""}`}>
-                        {imagePreview ? (
-                            <img src={imagePreview} alt="Uploaded Screenshot" />
-                        ) : (
-                            <div className="placeholder">
-                                <i className="fa-solid fa-cloud-arrow-up"></i>
-                                <h6>Upload your payment Screenshot <span className="required">*</span></h6>
-                            </div>
-                        )}
+                        {imagePreview
+                            ? (<img src={imagePreview} alt="Uploaded Screenshot"/>)
+                            : (
+                                <div className="placeholder">
+                                    <i className="fa-solid fa-cloud-arrow-up"></i>
+                                    <h6>Upload your payment Screenshot <span className="required">*</span></h6>
+                                </div>
+                            )}
                     </label>
 
                     <Controller
                         name="paymentScreenshot"
                         control={control}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <input
                                 type="file"
                                 id="payment-screenshot"
@@ -263,7 +264,8 @@ const RegisterForm = () => {
                                 <p>Type the password shared in the group chat.</p>
                             </div>
                             <div>
-                                <input type="password" placeholder="Password" {...register("password")} className="form-input" />
+                                <input type="password" placeholder="Password" {...register("password")}
+                                       className="form-input"/>
                                 <p className="error">{errors.password?.message}</p>
                             </div>
                         </div>
@@ -272,7 +274,7 @@ const RegisterForm = () => {
 
                     {/* Register Button */}
                     <div className="register-button">
-                        <button type="submit" >
+                        <button type="submit">
                             Register
                         </button>
 
@@ -302,9 +304,9 @@ const formSections = [
                 type: "radio",
                 name: "gender",
                 options: [
-                    { label: "Male", value: "male" },
-                    { label: "Female", value: "female" },
-                    { label: "Other", value: "other" },
+                    {label: "Male", value: "male"},
+                    {label: "Female", value: "female"},
+                    {label: "Other", value: "other"},
                 ],
                 errorField: "gender",
             },
@@ -331,8 +333,8 @@ const formSections = [
                 type: "radio",
                 name: "batch",
                 options: [
-                    { label: "2007", value: "2007" },
-                    { label: "2008", value: "2008" },
+                    {label: "2008", value: "2008"},
+                    {label: "2010", value: "2010"},
                 ],
                 errorField: "batch",
             },
@@ -341,10 +343,10 @@ const formSections = [
     {
         sectionTitle: "Address",
         fields: [
-            { type: "text", name: "city", placeholder: "City *", className: "form-input", errorField: "city" },
-            { type: "text", name: "state", placeholder: "State", className: "form-input", errorField: "state" },
-            { type: "text", name: "country", placeholder: "Country", className: "form-input", errorField: "country" },
-            { type: "text", name: "zipCode", placeholder: "Zip Code", className: "form-input", errorField: "zipCode" },
+            {type: "text", name: "city", placeholder: "City *", className: "form-input", errorField: "city"},
+            {type: "text", name: "state", placeholder: "State", className: "form-input", errorField: "state"},
+            {type: "text", name: "country", placeholder: "Country", className: "form-input", errorField: "country"},
+            {type: "text", name: "zipCode", placeholder: "Zip Code", className: "form-input", errorField: "zipCode"},
         ],
     },
     {
