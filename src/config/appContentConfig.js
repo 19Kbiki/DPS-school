@@ -1,44 +1,45 @@
-const NavBarItems = [
+export const navBarItems = [
     {name: "Home", url: "/"},
     {name: "About", url: "/about"},
     {name: "FAQ", url: "/faq"},
     {name: "Register", url: "/register"},
 ]
 
-const HeroSections = {
+export const heroSections = {
     title: {
         centreTagline: {top: "The great memories of school", main: "MEMORY LANE 2K25", bottom: "Nostalgia Feeling"},
         subTitle: "Where the great memories of school come to life.",
         footer: "Siliguri, 5th April 2025"
     },
-    backgroundImage : "",
+    backgroundImage: "",
     buttons: [
         {type: "primary", name: "Register", url: "/register"},
         {type: "secondary", name: "Read more", url: "/about"},
     ]
 }
 
-const aboutSection = {
+export const aboutSection = {
     title: {main: "ABOUT THE EVENT"},
-    mobile: `
-        <p>Step into cherished memories at our Alumni Meetup, where past bonds come alive. Reconnect with classmates, 
+    mobile: [`
+       Step into cherished memories at our Alumni Meetup, where past bonds come alive. Reconnect with classmates, 
            reminisce about school days, and celebrate personal milestones. With fun activities and a warm atmosphere, 
-        this event blends nostalgia with excitement. Join us for a day of joy, camaraderie, and unforgettable moments!
-        </p>`,
-    desktop: `
-        <p>Step into the cherished moments of the past with our Alumni Meetup, a celebration of the bonds and memories 
+        this event blends nostalgia with excitement. Join us for a day of joy, camaraderie, and unforgettable moments!`
+    ],
+    desktop: [
+        `Step into the cherished moments of the past with our Alumni Meetup, a celebration of the bonds and memories
         forged during school days. This event is a journey down Memory Lane, where the laughter, friendships, and 
-        stories of the good old days come alive.</p>
-        <p>Reconnect with classmates, reminisce about shared experiences, and celebrate the milestones you’ve achieved 
+        stories of the good old days come alive.`,
+        `Reconnect with classmates, reminisce about shared experiences, and celebrate the milestones you’ve achieved 
         since those formative years. Whether it's revisiting tales from the classroom or celebrating the achievements 
-        of your batch, this meetup is an opportunity to relive the great memories of school and create new ones.</p>
-        <p>With a thoughtfully curated itinerary, engaging activities, and a warm atmosphere, this event promises a 
+        of your batch, this meetup is an opportunity to relive the great memories of school and create new ones.`,
+        `With a thoughtfully curated itinerary, engaging activities, and a warm atmosphere, this event promises a 
         perfect blend of nostalgia and excitement. Take your first steps towards rekindling old connections and 
-        making this gathering an unforgettable experience.</p>
-        <p>Join us for a day filled with joy, camaraderie, and heartfelt moments!</p>`
+        making this gathering an unforgettable experience.`,
+        `Join us for a day filled with joy, camaraderie, and heartfelt moments!`
+    ]
 }
 
-const memoryLaneExpSection = {
+export const memoryLaneExpSection = {
     title: {main: "MEMORLANE EXPERIENCE"},
     cards: [
         {
@@ -54,26 +55,26 @@ const memoryLaneExpSection = {
     ]
 }
 
-const locationsSection = {
+export const locationsSection = {
     title: {main: "LOCATION"},
     hotelName: "Hotel Name",
     hotelAddress: "Address, Siliguri, 560103",
     roomName: "Conference Room Name",
     roomAddress: "Address, Siliguri, 560103",
-    image : ""
+    image: ""
 }
 
-const midBanner = {
-    image : "",
-    tagline : {
-        title : "Delhi Public School, Siliguri",
+export const midBanner = {
+    image: "",
+    tagline: {
+        title: "Delhi Public School, Siliguri",
         subTitle: "service before self"
     }
 }
 
-const itinerarySection = {
+export const itinerarySection = {
     title: {main: "ITINERARY"},
-    items : [
+    items: [
         "welcome speech by core committee",
         "Fun Games like musical chair, housie.",
         "Snacks and Meet and Greet",
@@ -84,9 +85,9 @@ const itinerarySection = {
     ]
 }
 
-const faqSection = {
+export const faqSection = {
     title: {main: "FAQ"},
-    items : [{
+    items: [{
         q: "is school involved?",
         a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
             "confirmation from school"
