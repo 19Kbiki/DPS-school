@@ -1,6 +1,7 @@
 import * as appContent from "../../../config/appContentConfig";
 import {Link} from "react-router-dom";
 import React from "react";
+import { NavHashLink } from "react-router-hash-link";
 
 export default function HeroSection() {
     return (
@@ -19,13 +20,13 @@ export default function HeroSection() {
                             <h1>{appContent.heroSections.title.centreTagline.main}</h1>
                             <h5>{appContent.heroSections.title.centreTagline.bottom}</h5>
                         </div>
-                        <div>
+                        <div className="foot_info">
                             <h4>{appContent.heroSections.title.subTitle}</h4>
                             <p>{appContent.heroSections.title.footer}</p>
                         </div>
                         <div className='buttons'>
-                            {appContent.heroSections.buttons.map(button => (
-                                <Link to={button.url}>{button.name}</Link>
+                            {appContent.heroSections.buttons.map((button, index) => (
+                                <NavHashLink key={index} className={button.type} to={button.url}>{button.name}</NavHashLink>
                             ))}
                         </div>
                     </div>

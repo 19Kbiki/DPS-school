@@ -1,0 +1,56 @@
+@import "../../scss/mixin.scss";
+@import "../../scss/variables.scss";
+
+footer {
+    // padding: $sec-padding;
+    padding-top: 3rem;
+    text-align: center;
+    background: #121C12;
+
+    margin-top: 5rem;
+    h2{
+        @include font_h2;
+    }
+
+    .footer_btm{
+        background: #1F2C1E;
+        padding: 1rem;
+        margin-top: 3rem;
+        font-size: 14px;
+        a{
+            color: rgb(251, 248, 163);
+            font-style: italic;
+        }
+    }
+}
+
+@media screen and (max-width: 568px) {
+    footer {
+        // padding: $sec-padding;
+        padding-top: 2rem;
+        text-align: center;
+        background: #121C12;
+    
+        margin-top: 3rem;
+        h2{
+            @include font_h2;
+            font-size: 24px;
+        }
+        p{
+            font-size: 12px;
+        }
+        img{
+            width: 10%;
+        }
+        .footer_btm{
+            background: #1F2C1E;
+            padding: 1rem;
+            margin-top: 3rem;
+            font-size: 12px;
+            a{
+                color: rgb(251, 248, 163);
+                font-style: italic;
+            }
+        }
+    }
+}

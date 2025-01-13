@@ -1,23 +1,6 @@
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #031102;
-  margin: 0;
-  color: #fff;
-}
+@import "../../scss/mixin.scss";
+@import "../../scss/variables.scss";
 
-//   .app-container {
-//     width: 100%;
-//     max-width: 800px;
-//     margin: 0 auto;
-//     padding: 20px;
-//   }
-.error {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: 4px;
-}
-
-/* Header Section */
 .header {
   text-align: center;
   background-size: cover;
@@ -56,7 +39,11 @@ body {
 
   }
 }
-
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
 /* Form Section */
 .form-container {
   background: #031102;
@@ -105,8 +92,10 @@ body {
     cursor: pointer;
 
     input[type="radio"] {
-      appearance: none; /* Remove default styling */
-      -webkit-appearance: none; /* For Safari */
+      appearance: none;
+      /* Remove default styling */
+      -webkit-appearance: none;
+      /* For Safari */
       width: 20px;
       height: 20px;
       border: 2px solid red;
@@ -237,18 +226,244 @@ body {
   justify-content: center;
 
   button {
-    width: 30%;
-    padding: 15px;
-    background: #fcb600;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 50px;
-    cursor: pointer;
-
-    &:hover {
-      background: #e0a700;
-    }
+    @include button;
+    width: 50%;
   }
 }
+
+
+@media screen and (max-width:568px) {
+
+  .header {
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    // padding: 20px;
+    color: #fff;
+    background-image: url("../../../public/assets/frm_bg.png");
+    // background-size:cover;
+    background-position: bottom;
+    object-fit: fill;
+
+    // height: 300px;
+    .frm_info {
+      padding: 8rem 0;
+    }
+
+    .logo {
+      height: 50px;
+      margin-bottom: 10px;
+    }
+
+    .school-name {
+      font-size: 36px;
+      margin-bottom: 1rem;
+      font-family: "Rochester", serif;
+      background: linear-gradient(90deg, #FFEFB1, #C99A46);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 36px;
+      font-style: italic;
+      font-family: "Seaweed Script", serif;
+      color: #FFEFB1;
+
+    }
+  }
+
+  /* Form Section */
+  .form-container {
+    background: #031102;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0;
+    text-align: left;
+  }
+
+  .form_wrp {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-section {
+    margin-bottom: 10px;
+
+    h3 {
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    h5 {
+      font-size: 16px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      background: #333;
+      border: 1px solid #ffefb179;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .gender {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .gender label {
+      margin-right: 10px;
+      text-align: center;
+      background: #333;
+      border: 1px solid #ffefb179;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 100px;
+
+
+      input[type="radio"] {
+        appearance: none;
+        /* Remove default styling */
+        -webkit-appearance: none;
+        /* For Safari */
+        width: 20px;
+        height: 20px;
+        border: 2px solid red;
+        border-radius: 50%;
+        outline: none;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        position: relative;
+      }
+
+      input[type="radio"]::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        transform: scale(0);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      input[type="radio"]:checked::after {
+        transform: scale(1);
+      }
+    }
+
+    .upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #555;
+      padding: 20px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .upload-input {
+      display: none;
+    }
+  }
+
+  /* Payment Section */
+  .payment_wrp {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .payment-option {
+    ul {
+      padding-left: 1rem;
+
+      li {
+        font-size: 14px;
+        color: #ccc;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .upload-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333; // Match the dark background
+    color: #fff;
+    border: 2px dashed #666; // Dashed border as shown
+    border-radius: 8px;
+    width: 100%;
+    height: 200px; // Adjust height based on design
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.with-image {
+      border: 2px dashed #00590d; // Optional: highlight border
+    }
+
+    .placeholder {
+      text-align: center;
+      background: transparent;
+      cursor: pointer;
+
+
+      i {
+        font-size: 2rem; // Icon size
+        margin-bottom: 10px;
+        color: #fff; // Icon color
+        display: block;
+      }
+
+      span {
+        font-size: 1rem;
+        color: #fff;
+        background: #00000000 !important;
+
+        .required {
+          color: red; // Highlight required asterisk
+          margin-left: 2px;
+        }
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      transform: translate(-50%, -50%);
+      object-fit: cover; // Ensures the image fills the box without distortion
+      z-index: 1;
+    }
+  }
+
+  .upload-input {
+    display: none; // Hide input field
+  }
+
+
+  /* Register Button */
+  .register-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      @include button;
+      width: 100%;
+    }
+  }
+  }

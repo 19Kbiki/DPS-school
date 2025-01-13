@@ -1,9 +1,11 @@
-import React, {useState} from "react";
-import {useForm, Controller} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "./register.scss"
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText } from "@mui/material";
+
 
 const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -12,7 +14,7 @@ const validationSchema = yup.object().shape({
     contactNumber: yup
         .string()
         .matches(/^[0-9]+$/, "Must be only digits")
-        .min(10, "Must be at least 10 digits")
+        // .len(10, "Must be at least 10 digits")
         .max(10, "Must be at 10 digits")
         .required("Contact number is required"),
     batch: yup.string().required("Batch is required"),
@@ -36,7 +38,7 @@ const validationSchema = yup.object().shape({
 const RegisterForm = () => {
     const [imagePreview, setImagePreview] = useState(""); // State to hold the image preview
 
-    const {register, handleSubmit, control, formState: {errors},} = useForm({resolver: yupResolver(validationSchema),});
+    const { register, handleSubmit, control, formState: { errors }, } = useForm({ resolver: yupResolver(validationSchema), });
 
     const onSubmit = async (data) => {
         try {
@@ -52,11 +54,13 @@ const RegisterForm = () => {
             formData.append("country", data.country);
             formData.append("zipCode", data.zipCode);
             formData.append("paymentScreenshot", data.paymentScreenshot[0]);
-            formData.append("password", data.password);
 
             // API call to submit form data
-            const response = await fetch("/api/register", {
+            const response = await fetch("https://memorylane-2525-be-551279970988.us-central1.run.app/api/v1/register", {
                 method: "POST",
+                headers: {
+                    "fun-code": data.password, // Ensure this is correct
+                },
                 body: formData,
             });
 
@@ -104,31 +108,58 @@ const RegisterForm = () => {
             <div className="container">
                 <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-section">
-                        <h3>Personal Details</h3>
-                        <input type="text" placeholder="Name" {...register("name")} className="form-input"/>
+                        <h4>Personal Details</h4>
+                        <input type="text" placeholder="Name" {...register("name")} className="form-input" />
                         <p className="error">{errors.name?.message}</p>
-                        <div className="gender">
-                            <h5>Gender</h5>
-                            <label>
-                                <input type="radio" {...register("gender")} value="male"/><span>Male</span>
-                            </label>
-                            <label>
-                                <input type="radio" {...register("gender")} value="female"/><span>Female</span>
-                            </label>
-                            <label>
-                                <input type="radio" {...register("gender")} value="other"/><span>Other</span>
-                            </label>
-                            <p className="error">{errors.gender?.message}</p>
-                        </div>
+                        <h3>Gender</h3>
+                        <FormControl component="fieldset" error={Boolean(errors.gender)}>
+                            {/* <FormLabel >Gender</FormLabel> */}
+                            <RadioGroup row>
+                                <FormControlLabel
+                                    value="male"
+                                    control={<Radio  sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }}/>}
+                                    label="Male"
+                                    {...register("gender", { required: "Please select your gender" })}
+                                />
+                                <FormControlLabel
+                                    value="female"
+                                    control={<Radio  sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }}/>}
+                                    label="Female"
+                                    {...register("gender", { required: "Please select your gender" })}
+                                />
+                                <FormControlLabel
+                                    value="other"
+                                    control={<Radio sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }} />}
+                                    label="Other"
+                                    {...register("gender", { required: "Please select your gender" })}
+                                />
+                            </RadioGroup>
+                            <FormHelperText>{errors.gender?.message}</FormHelperText>
+                        </FormControl>
 
                         <div className="form_wrp">
                             <div>
-                                <input type="email" placeholder="Email" {...register("email")} className="form-input"/>
+                                <input type="email" placeholder="Email" {...register("email")} className="form-input" />
                                 <p className="error">{errors.email?.message}</p>
                             </div>
                             <div>
                                 <input type="text" placeholder="Contact Number" {...register("contactNumber")}
-                                       className="form-input"/>
+                                    className="form-input" />
                                 <p className="error">{errors.contactNumber?.message}</p>
                             </div>
 
@@ -138,16 +169,35 @@ const RegisterForm = () => {
                     {/* Batch Section */}
                     <div className="form-section">
                         <h3>Batch</h3>
-                        <div className="gender">
-                            <label>
-                                <input type="radio" {...register("batch")} value="2007"/> 2007
-                            </label>
-                            <label>
-                                <input type="radio" {...register("batch")} value="2008"/> 2008
-                            </label>
-                            <p className="error">{errors.batch?.message}</p>
+                        <FormControl component="fieldset" error={Boolean(errors.batch)}>
+                            <RadioGroup row>
+                               
+                                <FormControlLabel
+                                    value="2008"
+                                    control={<Radio sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }} />}
+                                    label="2008"
+                                    {...register("batch", { required: "Please select a batch" })}
+                                />
+                                 <FormControlLabel
+                                    value="2010"
+                                    control={<Radio sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }} />}
+                                    label="2010"
+                                    {...register("batch", { required: "Please select a batch" })}
+                                />
+                            </RadioGroup>
+                            <FormHelperText>{errors.batch?.message}</FormHelperText>
+                        </FormControl>
 
-                        </div>
                     </div>
 
                     {/* Address Section */}
@@ -155,12 +205,12 @@ const RegisterForm = () => {
                         <h3>Address</h3>
                         <div className="form_wrp">
                             <div>
-                                <input type="text" placeholder="City *" {...register("city")} className="form-input"/>
+                                <input type="text" placeholder="City *" {...register("city")} className="form-input" />
                                 <p className="error">{errors.city?.message}</p>
 
                             </div>
                             <div>
-                                <input type="text" placeholder="State" {...register("state")} className="form-input"/>
+                                <input type="text" placeholder="State" {...register("state")} className="form-input" />
                                 <p className="error">{errors.state?.message}</p>
 
                             </div>
@@ -168,7 +218,7 @@ const RegisterForm = () => {
                             <div>
 
                                 <input type="text" placeholder="Country" {...register("country")}
-                                       className="form-input"/>
+                                    className="form-input" />
                                 <p className="error">{errors.country?.message}</p>
                             </div>
 
@@ -176,7 +226,7 @@ const RegisterForm = () => {
                             <div>
 
                                 <input type="text" placeholder="Zip Code" {...register("zipCode")}
-                                       className="form-input"/>
+                                    className="form-input" />
                                 <p className="error">{errors.zipCode?.message}</p>
                             </div>
                         </div>
@@ -214,22 +264,40 @@ const RegisterForm = () => {
 
                     <div className="form-section">
                         <h3>Packge</h3>
-                        <div className="gender">
-                            <label>
-                                <input type="radio" {...register("packge")} value="4000"/> 4000 INR (Event)
-                            </label>
-                            <label>
-                                <input type="radio" {...register("packge")} value="6500"/> 6500 INR (Event + Stay)
-
-                            </label>
-                            <p className="error">{errors.packge?.message}</p>
-
-                        </div>
+                        <FormControl component="fieldset" error={Boolean(errors.packge)}>
+                            <RadioGroup row>
+                                <FormControlLabel
+                                    value="4000"
+                                    control={<Radio sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }}
+                                    />}
+                                    label="4000 INR (Event)"
+                                    {...register("packge", { required: "Please select a package" })}
+                                />
+                                <FormControlLabel
+                                    value="6500"
+                                    control={<Radio sx={{
+                                        color: "#E0B757", // Default color
+                                        "&.Mui-checked": {
+                                            color: "#E0B757", // Checked color
+                                        },
+                                    }}
+                                    />}
+                                    label="6500 INR (Event + Stay)"
+                                    {...register("packge", { required: "Please select a package" })}
+                                />
+                            </RadioGroup>
+                            <FormHelperText>{errors.packge?.message}</FormHelperText>
+                        </FormControl>
                     </div>
 
                     <label htmlFor="payment-screenshot" className={`upload-box ${imagePreview ? "with-image" : ""}`}>
                         {imagePreview
-                            ? (<img src={imagePreview} alt="Uploaded Screenshot"/>)
+                            ? (<img src={imagePreview} alt="Uploaded Screenshot" />)
                             : (
                                 <div className="placeholder">
                                     <i className="fa-solid fa-cloud-arrow-up"></i>
@@ -241,7 +309,7 @@ const RegisterForm = () => {
                     <Controller
                         name="paymentScreenshot"
                         control={control}
-                        render={({field}) => (
+                        render={({ field }) => (
                             <input
                                 type="file"
                                 id="payment-screenshot"
@@ -265,7 +333,7 @@ const RegisterForm = () => {
                             </div>
                             <div>
                                 <input type="password" placeholder="Password" {...register("password")}
-                                       className="form-input"/>
+                                    className="form-input" />
                                 <p className="error">{errors.password?.message}</p>
                             </div>
                         </div>
@@ -281,7 +349,7 @@ const RegisterForm = () => {
                     </div>
                 </form>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };
@@ -304,9 +372,9 @@ const formSections = [
                 type: "radio",
                 name: "gender",
                 options: [
-                    {label: "Male", value: "male"},
-                    {label: "Female", value: "female"},
-                    {label: "Other", value: "other"},
+                    { label: "Male", value: "male" },
+                    { label: "Female", value: "female" },
+                    { label: "Other", value: "other" },
                 ],
                 errorField: "gender",
             },
@@ -333,8 +401,8 @@ const formSections = [
                 type: "radio",
                 name: "batch",
                 options: [
-                    {label: "2008", value: "2008"},
-                    {label: "2010", value: "2010"},
+                    { label: "2008", value: "2008" },
+                    { label: "2010", value: "2010" },
                 ],
                 errorField: "batch",
             },
@@ -343,10 +411,10 @@ const formSections = [
     {
         sectionTitle: "Address",
         fields: [
-            {type: "text", name: "city", placeholder: "City *", className: "form-input", errorField: "city"},
-            {type: "text", name: "state", placeholder: "State", className: "form-input", errorField: "state"},
-            {type: "text", name: "country", placeholder: "Country", className: "form-input", errorField: "country"},
-            {type: "text", name: "zipCode", placeholder: "Zip Code", className: "form-input", errorField: "zipCode"},
+            { type: "text", name: "city", placeholder: "City *", className: "form-input", errorField: "city" },
+            { type: "text", name: "state", placeholder: "State", className: "form-input", errorField: "state" },
+            { type: "text", name: "country", placeholder: "Country", className: "form-input", errorField: "country" },
+            { type: "text", name: "zipCode", placeholder: "Zip Code", className: "form-input", errorField: "zipCode" },
         ],
     },
     {

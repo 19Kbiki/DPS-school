@@ -1,0 +1,50 @@
+@mixin gridbox ($type, $number , $gap, $aline) {
+    display: $type;
+    grid-template-columns: repeat($number , 1fr);
+    gap: $gap;
+    align-items: $aline;
+}
+
+@mixin font_h2 {
+    font-size: 3rem;
+    font-family: "Quantico", serif;
+    background: linear-gradient(to bottom, $pry-color, #fafa90, $sec-color); // Gradient color
+    -webkit-background-clip: text; // Clip the background to the text
+    background-clip: text; // For non-Webkit browsers
+    color: transparent; 
+}
+
+@mixin button{
+
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        background: linear-gradient(145deg, $pry-color, $sec-color, $pry-color); /* Gradient background */
+        text-align: center;
+        transition: all 0.3s ease; /* Smooth transition for hover effect */
+        box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.2), inset -4px -4px 10px rgba(255, 255, 255, 0.3);
+        border: 3px solid $sec-color;
+      
+       
+        /* Add hover effect */
+        &:hover {
+          box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3), -6px -6px 15px rgba(255, 255, 255, 0.4);
+          transform: translateY(-2px); /* Slightly lift the button on hover */
+        }
+      
+        /* Add active effect */
+        &:active {
+          box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.3);
+          transform: translateY(2px); /* Push the button down on click */
+        }
+
+        @media screen and (max-width:427px) {
+            font-size: 12px;
+            padding: 0.5rem 1rem;
+        }
+      
+      
+
+}

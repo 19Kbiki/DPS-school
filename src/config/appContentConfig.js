@@ -1,25 +1,24 @@
 export const navBarItems = [
-    {name: "Home", url: "/"},
-    {name: "About", url: "/about"},
-    {name: "FAQ", url: "/faq"},
-    {name: "Register", url: "/register"},
+    { name: "Home", url: "/" },
+    { name: "About", url: "/#about" },
+    { name: "FAQ", url: "/#faq" },
 ]
 
 export const heroSections = {
     title: {
-        centreTagline: {top: "The great memories of school", main: "MEMORY LANE 2K25", bottom: "Nostalgia Feeling"},
+        centreTagline: { top: "The great memories of school", main: "MEMORY LANE 2K25", bottom: "Nostalgia Feeling" },
         subTitle: "Where the great memories of school come to life.",
         footer: "Siliguri, 5th April 2025"
     },
     backgroundImage: "",
     buttons: [
-        {type: "primary", name: "Register", url: "/register"},
-        {type: "secondary", name: "Read more", url: "/about"},
+        { type: "primary", name: "Register Now", url: "/register" },
+        { type: "secondary", name: "Read more", url: "/#about" },
     ]
 }
 
 export const aboutSection = {
-    title: {main: "ABOUT THE EVENT"},
+    title: { main: "ABOUT THE EVENT" },
     mobile: [`
        Step into cherished memories at our Alumni Meetup, where past bonds come alive. Reconnect with classmates, 
            reminisce about school days, and celebrate personal milestones. With fun activities and a warm atmosphere, 
@@ -40,7 +39,7 @@ export const aboutSection = {
 }
 
 export const memoryLaneExpSection = {
-    title: {main: "MEMORLANE EXPERIENCE"},
+    title: { main: "MEMORY LANE EXPERIENCE" },
     cards: [
         {
             title: "Meet and Greet",
@@ -56,10 +55,10 @@ export const memoryLaneExpSection = {
 }
 
 export const locationsSection = {
-    title: {main: "LOCATION"},
+    title:  "LOCATION",
     hotelName: "Hotel Name",
-    hotelAddress: "Address, Siliguri, 560103",
-    roomName: "Conference Room Name",
+    hotelAddress: "Hill Cart Rd, Ward 6, Siliguri, West Bengal 734001",
+    roomName: "Conference Room",
     roomAddress: "Address, Siliguri, 560103",
     image: ""
 }
@@ -68,28 +67,41 @@ export const midBanner = {
     image: "",
     tagline: {
         title: "Delhi Public School, Siliguri",
-        subTitle: "service before self"
+        subTitle: `-"service before self"`
     }
 }
 
 export const itinerarySection = {
-    title: {main: "ITINERARY"},
+    title: { main: "ITINERARY" },
     items: [
         "welcome speech by core committee",
+        "Award ceremony (best dressed, best looking, etc which we will do the voting for on the spot)",
         "Fun Games like musical chair, housie.",
         "Snacks and Meet and Greet",
-        "Games",
-        "award ceremony (best dressed, best looking, etc which we will do the voting for on the spot).",
-        "complimentary drinks (alcoholic+non alcoholic) and dj will be going on along with the events.",
         "dinner will start from 8pm",
+        "complimentary drinks (alcoholic+non alcoholic) and dj will be going on along with the events",
+        "Games",
     ]
 }
 
 export const faqSection = {
-    title: {main: "FAQ"},
+    title: { main: "FAQ" },
+    description:"No, but we are planning to visit school next day for photo session. Timings will be provided after " +
+            "confirmation from school",
     items: [{
         q: "is school involved?",
         a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
             "confirmation from school"
-    }]
+    },
+    {
+        q: "is school involved?",
+        a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
+            "confirmation from school"
+    },
+    {
+        q: "is school involved?",
+        a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
+            "confirmation from school"
+    },
+]
 }

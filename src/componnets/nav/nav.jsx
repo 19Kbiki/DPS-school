@@ -1,17 +1,35 @@
-import React from 'react';
-import { Link, Links, useLocation } from 'react-router-dom'; // Import useLocation hook
-import "./nav.scss"
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom'; // Import useLocation hook
+import './nav.scss';
+import { navBarItems } from '../../config/appContentConfig';
+import { NavHashLink } from 'react-router-hash-link';
+import { Offcanvas } from "bootstrap";
 export default function Nav() {
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false); // State to toggle mobile menu
     const location = useLocation(); // Get the current location
+    const isHomePage = location.pathname === '/'; // Check if it's the home page
 
-    // Check if the current route is the home page
-    const isHomePage = location.pathname === '/';
+    const [isOffcanvasOpen, setOffcanvasOpen] = useState(false);
+    const toggleOffcanvas = () => {
+        setOffcanvasOpen(!isOffcanvasOpen);
+    };
+
+    const closeOffcanvas = () => {
+        setOffcanvasOpen(false);
+    }; 
+    const scrollWithOffset = (el) => {
+        const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+        const yOffset = 80; // Adjust offset to scroll up by 250px
+        window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+    };
+
 
     return (
         <div>
-            <header>
+            {/* Desktop Navbar */}
+            <header className="nav-bar">
                 <div className="container">
-                    <nav className='nav'>
+                    <nav className="nav">
                         <div className="logo">
                             <Link to="/">
                                 <img src="/assets/logo.png" alt="" />
@@ -19,16 +37,89 @@ export default function Nav() {
                         </div>
                         <div className="menu">
                             <ul>
-                                <li>FAQ</li>
+                                {navBarItems.map((ele, index) => (
+                                    <li key={index}>
+                                        <NavHashLink smooth to={ele.url} scroll={(el) => scrollWithOffset(el)}>
+                                            {ele.name}
+                                        </NavHashLink>
+                                    </li>
+                                ))}
                             </ul>
-                            {/* Conditionally render the "book now" button */}
                             {isHomePage && (
-                                <Link to="/register">Book now</Link>
+                                <Link to="/register" className="nav_btn">
+                                    Register now
+                                </Link>
+                            )}
+                        </div>
+
+                        <div className="humbergur">
+                            <button
+                                type="button"
+
+                                onClick={toggleOffcanvas} // Open offcanvas
+                            >
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+
+                            {/* Offcanvas Menu */}
+                            <div className={`offcanvas offcanvas-end hum_body ${isOffcanvasOpen ? 'show' : ''}`} tabindex="-1">
+                                <div className="offcanvas-header">
+                                    <div className="logo">
+                                        <Link to="/" onClick={closeOffcanvas}>
+                                            <img src="/assets/logo.png" alt="Logo" />
+                                        </Link>
+                                    </div>
+                                    <button
+
+                                        onClick={closeOffcanvas} // Close offcanvas
+                                    >
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                </div>
+                                <div className="offcanvas-body">
+                                    <ul>
+                                        {navBarItems.map((ele, index) => (
+                                            <li key={index}>
+                                                <NavHashLink
+                                                    smooth
+                                                    to={ele.url}
+                                                    scroll={(el) => scrollWithOffset(el)}
+                                                    onClick={closeOffcanvas} // Close offcanvas on navigation
+                                                >
+                                                    {ele.name}
+                                                </NavHashLink>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    {location.pathname === '/' && (
+                                        <Link to="/register" className="nav_btn" onClick={closeOffcanvas}>
+                                            Register now
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Backdrop for Offcanvas */}
+                            {isOffcanvasOpen && (
+                                <div
+                                    className="offcanvas-backdrop"
+                                    onClick={closeOffcanvas} // Close offcanvas when clicking outside
+                                ></div>
                             )}
                         </div>
                     </nav>
                 </div>
-            </header>
-        </div>
+            </header >
+
+
+
+
+
+
+        </div >
     );
 }
