@@ -8,6 +8,10 @@ import Footer from './componnets/footer/footer';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
+import UserDetails from './pages/status/status';
+import ParticipentDetails from './pages/admin/participentDetails/participentDetails';
+import Login from './pages/admin/login/login.jsx/login';
+import { Navigate } from 'react-router-dom';
 function App() {
   useEffect(() => {
     AOS.init({
@@ -18,14 +22,20 @@ function App() {
   }, [])
   return (
     <BrowserRouter>
-    <ScrollToTop/>
-    <Nav/>
+      <ScrollToTop />
+      <Nav />
       <Routes>
-          <Route index element={<Home />} />
-          <Route path="register" element={<RegisterForm />} />
-          <Route path="*" element={<Home />} />
+        <Route index element={<Home />} />
+        <Route path="register" element={<RegisterForm />} />
+        <Route path="status/:id" element={<UserDetails />} />
+        <Route path='/login' element={<Login />} />
+        <Route
+          path="/participent"
+          element={<ProtectedRoute element={<ParticipentDetails />} />}
+        />
+        <Route path="*" element={<Home />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 }
@@ -51,3 +61,16 @@ const ScrollToTop = () => {
 
   return null; // This component doesn't render anything
 };
+
+
+
+
+export function ProtectedRoute({ element: Component, ...rest }) {
+  const token = sessionStorage.getItem('token'); // Adjust token storage location as needed
+
+  return token ? (
+    Component
+  ) : (
+    <Navigate to="/login" replace />
+  );
+}

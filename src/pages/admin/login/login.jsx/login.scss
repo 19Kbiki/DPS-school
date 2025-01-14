@@ -1,0 +1,37 @@
+
+@import "../../../../scss/mixin.scss";
+@import "../../../../scss/variables.scss";
+.login{
+    padding: 5rem 0 ;
+    background-image: url("../../../../../public/assets/banner.png");
+    background-size: cover;
+
+    .login_wrp{
+        margin: 5rem 15rem;
+        padding: 3rem 5rem;
+        background: #263326d2;
+        border-radius: 10PX;
+
+        form{
+            margin-top: 3rem;
+            input{
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 5px;
+                background: #333;
+                border: 1px solid #ffefb179;
+                border-radius: 4px;
+                color: #fff;
+                &::placeholder{
+                    color: #c7c7c7
+                }
+            }
+            button{
+              @include button;
+              width: 100%;
+              color: #000;
+            }
+        }
+
+    }
+}

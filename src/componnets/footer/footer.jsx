@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="container">
 
             <img src="/assets/logo.png" alt="" />
-            <h2>Delhi Public School Siliguri</h2>
+            <h2 style={{textTransform:"uppercase"}}>Memory Lane 2k25</h2>
             <p>Where the great memories of school come to life</p>
         </div>
         <div className="footer_btm">

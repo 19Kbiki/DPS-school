@@ -283,21 +283,22 @@
 
     .wrp {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
         gap: 0.5rem;
         row-gap: 1rem;
-
+        
         .iti_item {
+            text-align: left;
             background: rgba(24, 37, 23, 0.6); // Slightly transparent background
             border: 2px solid #c9994643; // Ensure $pry-color is defined
             padding: 1rem;
             border-radius: 5px;
             color: #fff; // Text color
-            text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add shadow for dept
-            min-width: 320px;
+            display: inline;
+            min-width: 300px;
         }
     }
 }
@@ -395,9 +396,8 @@
                 padding: 1rem;
                 border-radius: 5px;
                 color: #fff; // Text color
-                text-align: center;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add shadow for dept
-                min-width: 400px;
+          
             }
         }
     }  
@@ -438,9 +438,8 @@
                 padding: 1rem;
                 border-radius: 5px;
                 color: #fff; // Text color
-                text-align: center;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add shadow for dept
-                min-width: 320px;
+
             }
         }
     }  

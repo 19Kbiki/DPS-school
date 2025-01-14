@@ -7,7 +7,7 @@ export default function HeroSection() {
     return (
         <section className='banner'>
             <div className="banner-video-container">
-                <video autoPlay muted loop className="banner-video">
+                <video autoPlay muted loop className="banner-video" playsInline>
                     <source src="/assets/bg.mp4" type="video/mp4"/>
                     Your browser does not support the video tag.
                 </video>

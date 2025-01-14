@@ -55,8 +55,8 @@ export const memoryLaneExpSection = {
 }
 
 export const locationsSection = {
-    title:  "LOCATION",
-    hotelName: "Hotel Name",
+    title: "LOCATION",
+    hotelName: "Siliguri",
     hotelAddress: "Hill Cart Rd, Ward 6, Siliguri, West Bengal 734001",
     roomName: "Conference Room",
     roomAddress: "Address, Siliguri, 560103",
@@ -74,34 +74,42 @@ export const midBanner = {
 export const itinerarySection = {
     title: { main: "ITINERARY" },
     items: [
-        "welcome speech by core committee",
-        "Award ceremony (best dressed, best looking, etc which we will do the voting for on the spot)",
-        "Fun Games like musical chair, housie.",
-        "Snacks and Meet and Greet",
-        "dinner will start from 8pm",
-        "complimentary drinks (alcoholic+non alcoholic) and dj will be going on along with the events",
-        "Games",
+        "5:30 PM: Registration and collection of name tags & coupons",
+        "6:00 PM: Welcome speech by the core committee",
+        "6:00 - 8:00 PM: Fun activities including musical chairs, housie, and trivia",
+        "8:00 PM: Award ceremony with spot voting for categories such as Best Dressed and Best Looking",
+        "9:00 PM: Dinner service begins",
     ]
 }
 
 export const faqSection = {
     title: { main: "FAQ" },
-    description:"No, but we are planning to visit school next day for photo session. Timings will be provided after " +
-            "confirmation from school",
-    items: [{
-        q: "is school involved?",
-        a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
-            "confirmation from school"
-    },
-    {
-        q: "is school involved?",
-        a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
-            "confirmation from school"
-    },
-    {
-        q: "is school involved?",
-        a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
-            "confirmation from school"
-    },
-]
+    description: "No, but we are planning to visit school next day for photo session. Timings will be provided after " +
+        "confirmation from school",
+
+    items: [
+        {
+            q: "is school involved?",
+            a: " No, but we are planning to visit school next day for photo session. Timings will be provided after " +
+                "confirmation from school"
+
+        },
+
+        {
+            q: "What is the reporting time?",
+            a: " The reporting time is 5:00 PM IST "
+        },
+        {
+            q: "Is stay arranged for the event?",
+            a: "Yes, stay is arranged. You need to select the Event and Stay option during registration. A Core Team member will contact you with further details."
+        },
+        {
+            q: "Is transportation arranged from NJP Station or Bagdogra Airport?",
+            a: " No, transportation is not arranged from these locations."
+        },
+        {
+            q: "Who are the points of contact?",
+            a: "Sourabh Dutta: +91 9632321371 , Akul Saurabh: +91 9968336459"
+        },
+    ]
 }

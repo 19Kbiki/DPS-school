@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
         .max(10, "Must be at 10 digits")
         .required("Contact number is required"),
     batch: yup.string().required("Batch is required"),
-    packge: yup.string().required("Please select Packge"),
+    Package: yup.string().required("Please select Packge"),
     city: yup.string().required("City is required"),
     state: yup.string().required("State is required"),
     country: yup.string().required("Country is required"),
@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
         .mixed()
         .required("Payment screenshot is required")
         .test("fileType", "Only images are allowed", (value) => {
-            return value && ["image/jpeg", "image/png"].includes(value.type);
+            return value && ["image/jpeg","image/jpg", "image/png"].includes(value.type);
         }),
     password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
@@ -48,8 +48,9 @@ const RegisterForm = () => {
             formData.append("email", data.email);
             formData.append("contactNumber", data.contactNumber);
             formData.append("batch", data.batch);
-            formData.append("packge", data.packge);
+            formData.append("Package", data.Package);
             formData.append("city", data.city);
+            formData.append("CountryCode", +91);
             formData.append("state", data.state);
             formData.append("country", data.country);
             formData.append("zipCode", data.zipCode);
@@ -82,14 +83,13 @@ const RegisterForm = () => {
     };
 
     const handleImageChange = (file) => {
-        if (file) {
+        if (file && ["image/jpeg", "image/png"].includes(file.type)) {
             const reader = new FileReader();
-            reader.onload = () => {
-                setImagePreview(reader.result);
-            };
+            reader.onload = () => setImagePreview(reader.result);
             reader.readAsDataURL(file);
         } else {
-            setImagePreview(null);
+            toast.error("Invalid file format. Only JPEG and PNG are allowed.");
+            setImagePreview("");
         }
     };
 
@@ -117,23 +117,23 @@ const RegisterForm = () => {
                             <RadioGroup row>
                                 <FormControlLabel
                                     value="male"
-                                    control={<Radio  sx={{
+                                    control={<Radio sx={{
                                         color: "#E0B757", // Default color
                                         "&.Mui-checked": {
                                             color: "#E0B757", // Checked color
                                         },
-                                    }}/>}
+                                    }} />}
                                     label="Male"
                                     {...register("gender", { required: "Please select your gender" })}
                                 />
                                 <FormControlLabel
                                     value="female"
-                                    control={<Radio  sx={{
+                                    control={<Radio sx={{
                                         color: "#E0B757", // Default color
                                         "&.Mui-checked": {
                                             color: "#E0B757", // Checked color
                                         },
-                                    }}/>}
+                                    }} />}
                                     label="Female"
                                     {...register("gender", { required: "Please select your gender" })}
                                 />
@@ -171,7 +171,7 @@ const RegisterForm = () => {
                         <h3>Batch</h3>
                         <FormControl component="fieldset" error={Boolean(errors.batch)}>
                             <RadioGroup row>
-                               
+
                                 <FormControlLabel
                                     value="2008"
                                     control={<Radio sx={{
@@ -183,7 +183,7 @@ const RegisterForm = () => {
                                     label="2008"
                                     {...register("batch", { required: "Please select a batch" })}
                                 />
-                                 <FormControlLabel
+                                <FormControlLabel
                                     value="2010"
                                     control={<Radio sx={{
                                         color: "#E0B757", // Default color
@@ -264,10 +264,10 @@ const RegisterForm = () => {
 
                     <div className="form-section">
                         <h3>Packge</h3>
-                        <FormControl component="fieldset" error={Boolean(errors.packge)}>
+                        <FormControl component="fieldset" error={Boolean(errors.Package)}>
                             <RadioGroup row>
                                 <FormControlLabel
-                                    value="4000"
+                                    value="event"
                                     control={<Radio sx={{
                                         color: "#E0B757", // Default color
                                         "&.Mui-checked": {
@@ -276,10 +276,10 @@ const RegisterForm = () => {
                                     }}
                                     />}
                                     label="4000 INR (Event)"
-                                    {...register("packge", { required: "Please select a package" })}
+                                    {...register("Package", { required: "Please select a package" })}
                                 />
                                 <FormControlLabel
-                                    value="6500"
+                                    value="eventAndStay"
                                     control={<Radio sx={{
                                         color: "#E0B757", // Default color
                                         "&.Mui-checked": {
@@ -288,41 +288,34 @@ const RegisterForm = () => {
                                     }}
                                     />}
                                     label="6500 INR (Event + Stay)"
-                                    {...register("packge", { required: "Please select a package" })}
+                                    {...register("Package", { required: "Please select a package" })}
                                 />
                             </RadioGroup>
-                            <FormHelperText>{errors.packge?.message}</FormHelperText>
+                            <FormHelperText>{errors.Package?.message}</FormHelperText>
                         </FormControl>
                     </div>
 
-                    <label htmlFor="payment-screenshot" className={`upload-box ${imagePreview ? "with-image" : ""}`}>
-                        {imagePreview
-                            ? (<img src={imagePreview} alt="Uploaded Screenshot" />)
-                            : (
-                                <div className="placeholder">
-                                    <i className="fa-solid fa-cloud-arrow-up"></i>
-                                    <h6>Upload your payment Screenshot <span className="required">*</span></h6>
-                                </div>
+                    <div className="form-section">
+                        <label htmlFor="payment-screenshot" className={`upload-box ${imagePreview ? "with-image" : ""}`}>
+                            {imagePreview ? (
+                                <img src={imagePreview} alt="Uploaded Screenshot" />
+                            ) : (
+                                <div className="placeholder-text">Upload Payment Screenshot</div>
                             )}
-                    </label>
-
-                    <Controller
-                        name="paymentScreenshot"
-                        control={control}
-                        render={({ field }) => (
-                            <input
-                                type="file"
-                                id="payment-screenshot"
-                                onChange={(e) => {
-                                    field.onChange(e.target.files[0]);
-                                    handleImageChange(e.target.files[0]); // Handle image preview
-                                }}
-                                className="upload-input"
-                                accept="image/png, image/jpeg"
-                            />
-                        )}
-                    />
-                    <p className="error">{errors.paymentScreenshot?.message}</p>
+                        </label>
+                        <input
+                            type="file"
+                            id="payment-screenshot"
+                            accept="image/jpeg,image/jpg image/png"
+                            {...register("paymentScreenshot")}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                handleImageChange(file);
+                            }}
+                            className="input-input"
+                        />
+                        <p className="error">{errors.paymentScreenshot?.message}</p>
+                    </div>
 
                     {/* Security Check Section */}
                     <div className="form-section">
