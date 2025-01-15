@@ -1,7 +1,6 @@
 import * as appContent from "../../../config/appContentConfig";
-import {Link} from "react-router-dom";
 import React from "react";
-import { NavHashLink } from "react-router-hash-link";
+import {NavHashLink} from "react-router-hash-link";
 
 export default function HeroSection() {
     return (

@@ -23,7 +23,7 @@ const UserDetails = () => {
         };
 
         fetchData();
-    }, []);
+    }, [number.id]);
 
     if (loading) {
         return <p>Loading...</p>;

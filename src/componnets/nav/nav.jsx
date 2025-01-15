@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation hook
+import React, {useState} from 'react';
+import {Link, useLocation} from 'react-router-dom'; // Import useLocation hook
 import './nav.scss';
-import { navBarItems } from '../../config/appContentConfig';
-import { NavHashLink } from 'react-router-hash-link';
-import { Offcanvas } from "bootstrap";
+import {navBarItems} from '../../config/appContentConfig';
+import {NavHashLink} from 'react-router-hash-link';
+
 export default function Nav() {
-    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false); // State to toggle mobile menu
-    const location = useLocation(); // Get the current location
+    let location = useLocation(); // Get the current location
     const isHomePage = location.pathname === '/'; // Check if it's the home page
 
     const [isOffcanvasOpen, setOffcanvasOpen] = useState(false);

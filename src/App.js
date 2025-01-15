@@ -1,17 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 import RegisterForm from './pages/register/registerform';
 import Home from './pages/home/home';
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Nav from './componnets/nav/nav';
 import Footer from './componnets/footer/footer';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import UserDetails from './pages/status/status';
 import ParticipentDetails from './pages/admin/participentDetails/participentDetails';
 import Login from './pages/admin/login/login.jsx/login';
-import { Navigate } from 'react-router-dom';
+
 function App() {
   useEffect(() => {
     AOS.init({
