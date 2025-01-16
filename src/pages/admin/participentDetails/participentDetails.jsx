@@ -12,9 +12,8 @@ import { GET_PARTICIPANTS } from '../../../config/Api';
 
 export default function ParticipentDetails() {
     const [rows, setRows] = useState([]);
-    const [openApproveDialog, setOpenApproveDialog] = useState(false);
-    const [openRemarkDialog, setOpenRemarkDialog] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
+    const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
     const [remark, setRemark] = useState("");
 
     const paginationModel = { page: 0, pageSize: 5 };
@@ -35,6 +34,7 @@ export default function ParticipentDetails() {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
+                console.log("data----------", data)
                 const formattedData = data.map((item, index) => ({
                     id: index + 1,
                     ...item,
@@ -48,16 +48,12 @@ export default function ParticipentDetails() {
         fetchData();
     }, []);
 
-    // Handlers
-    const handleOpenApproveDialog = (row) => {
-        setSelectedRow(row);
-        setOpenApproveDialog(true);
+    const handleRowClick = (row) => {
+        setSelectedRow(row.row);
+        setOpenDetailsDialog(true);
     };
 
     const handleApprove = async () => {
-        console.log("Approved:", selectedRow);
-        setOpenApproveDialog(false);
-
         try {
             const token = sessionStorage.getItem('token');
             await fetch(`/approve/${selectedRow.id}`, {
@@ -68,21 +64,32 @@ export default function ParticipentDetails() {
                 },
                 body: JSON.stringify({ status: "Approved" }),
             });
+            console.log("Approved:", selectedRow);
         } catch (error) {
-            console.error("Error approving payment:", error);
+            console.error("Error approving participant:", error);
         }
+        setOpenDetailsDialog(false);
     };
 
-    const handleOpenRemarkDialog = (row) => {
-        setSelectedRow(row);
-        setOpenRemarkDialog(true);
+    const handleReject = async () => {
+        try {
+            const token = sessionStorage.getItem('token');
+            await fetch(`/reject/${selectedRow.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ status: "Rejected" }),
+            });
+            console.log("Rejected:", selectedRow);
+        } catch (error) {
+            console.error("Error rejecting participant:", error);
+        }
+        setOpenDetailsDialog(false);
     };
 
     const handleSubmitRemark = async () => {
-        console.log("Remark submitted for:", selectedRow);
-        console.log("Remark:", remark);
-        setOpenRemarkDialog(false);
-
         try {
             const token = sessionStorage.getItem('token');
             await fetch(`/remark/${selectedRow.id}`, {
@@ -93,51 +100,20 @@ export default function ParticipentDetails() {
                 },
                 body: JSON.stringify({ remark }),
             });
+            console.log("Remark submitted for:", selectedRow);
+            console.log("Remark:", remark);
         } catch (error) {
             console.error("Error submitting remark:", error);
         }
-
         setRemark("");
+        setOpenDetailsDialog(false);
     };
 
-    // Columns configuration
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Name', width: 150 },
-        { field: 'email', headerName: 'Email', width: 200 },
-        { field: 'gender', headerName: 'Gender', width: 100 },
-        { field: 'contactNumber', headerName: 'Contact', width: 150 },
-        { field: 'batch', headerName: 'Batch', width: 100 },
-        { field: 'city', headerName: 'City', width: 120 },
-        { field: 'country', headerName: 'Country', width: 120 },
-        {
-            field: 'approve',
-            headerName: 'Approve',
-            width: 150,
-            renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="success"
-                    onClick={() => handleOpenApproveDialog(params.row)}
-                >
-                    Approve
-                </Button>
-            ),
-        },
-        {
-            field: 'remarks',
-            headerName: 'Remarks',
-            width: 150,
-            renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleOpenRemarkDialog(params.row)}
-                >
-                    Remark
-                </Button>
-            ),
-        },
+        { field: 'name', headerName: 'Name', width: 300 },
+        { field: 'email', headerName: 'Email', width: 300 },
+        { field: 'contactNumber', headerName: 'Contact', width: 300 },
+        { field: 'batch', headerName: 'Batch', width: 200 },
     ];
 
     return (
@@ -151,6 +127,7 @@ export default function ParticipentDetails() {
                             columns={columns}
                             initialState={{ pagination: { paginationModel } }}
                             pageSizeOptions={[10]}
+                            onRowClick={handleRowClick}
                             sx={{
                                 border: 0,
                                 color: "#ffffff",
@@ -175,34 +152,44 @@ export default function ParticipentDetails() {
                     </Paper>
                 </div>
 
-                {/* Approve Dialog */}
-                <Dialog open={openApproveDialog} onClose={() => setOpenApproveDialog(false)}>
-                    <DialogTitle>Confirm Approval</DialogTitle>
+                {/* Details Dialog */}
+                <Dialog open={openDetailsDialog} onClose={() => setOpenDetailsDialog(false)}>
+                    <DialogTitle>Participant Details</DialogTitle>
                     <DialogContent>
-                        Are you sure you want to approve this payment?
+                        {selectedRow && (
+                            <div>
+                                <p><strong>Name:</strong> {selectedRow.name}</p>
+                                <p><strong>Email:</strong> {selectedRow.email}</p>
+                                <p><strong>Contact:</strong> {selectedRow.contactNumber}</p>
+                                <p><strong>Batch:</strong> {selectedRow.batch}</p>
+                                {selectedRow.image && (
+                                    <div>
+                                        <img src={selectedRow.paymentScreenshot} alt="Participant" style={{ maxWidth: "100%", marginBottom: "10px" }} />
+                                        <Button
+                                            variant="outlined"
+                                            onClick={() => window.open(selectedRow.image, "_blank")}
+                                        >
+                                            Download Image
+                                        </Button>
+                                    </div>
+                                )}
+                                <TextField
+                                    fullWidth
+                                    label="Remark"
+                                    value={remark}
+                                    onChange={(e) => setRemark(e.target.value)}
+                                    multiline
+                                    rows={3}
+                                    style={{ marginTop: "20px" }}
+                                />
+                            </div>
+                        )}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setOpenApproveDialog(false)}>Cancel</Button>
+                        <Button onClick={() => setOpenDetailsDialog(false)}>Cancel</Button>
                         <Button onClick={handleApprove} color="success">Approve</Button>
-                    </DialogActions>
-                </Dialog>
-
-                {/* Remark Dialog */}
-                <Dialog open={openRemarkDialog} onClose={() => setOpenRemarkDialog(false)}>
-                    <DialogTitle>Submit Remark</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            fullWidth
-                            label="Remark"
-                            value={remark}
-                            onChange={(e) => setRemark(e.target.value)}
-                            multiline
-                            rows={4}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setOpenRemarkDialog(false)}>Cancel</Button>
-                        <Button onClick={handleSubmitRemark} color="primary">Submit</Button>
+                        <Button onClick={handleReject} color="error">Reject</Button>
+                        <Button onClick={handleSubmitRemark} color="primary">Submit Remark</Button>
                     </DialogActions>
                 </Dialog>
             </div>
