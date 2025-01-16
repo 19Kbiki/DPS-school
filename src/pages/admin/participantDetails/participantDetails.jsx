@@ -9,7 +9,9 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import "./participantDetails.scss";
 import { PARTICIPANTS } from '../../../config/api';
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 export default function ParticipantDetails() {
     const [rows, setRows] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
@@ -71,60 +73,58 @@ export default function ParticipantDetails() {
         setOpenDetailsDialog(false);
     };
 
-    const handleReject = async () => {
-        try {
-            const token = sessionStorage.getItem('token');
-            await fetch(`/reject/${selectedRow.id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ status: "Rejected" }),
-            });
-            console.log("Rejected:", selectedRow);
-        } catch (error) {
-            console.error("Error rejecting participant:", error);
-        }
-        setOpenDetailsDialog(false);
-    };
-
-    const handleSubmitRemark = async () => {
-        try {
-            const token = sessionStorage.getItem('token');
-            await fetch(`/remark/${selectedRow.id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ remark }),
-            });
-            console.log("Remark submitted for:", selectedRow);
-            console.log("Remark:", remark);
-        } catch (error) {
-            console.error("Error submitting remark:", error);
-        }
-        setRemark("");
-        setOpenDetailsDialog(false);
-    };
 
     const columns = [
-        { field: 'name', headerName: 'Name', width: 300 },
+        { field: 'name', headerName: 'Name', width: 150 },
         { field: 'email', headerName: 'Email', width: 300 },
         { field: 'contactNumber', headerName: 'Contact', width: 300 },
         { field: 'batch', headerName: 'Batch', width: 200 },
+        {
+            field: 'approvalStatus',
+            headerName: 'Status',
+            width: 200,
+            renderCell: (params) => {
+                switch (params.value) {
+                    case 'Approved':
+                        return <CheckCircleIcon style={{ color: 'green' }} />;
+                    case 'Rejected':
+                        return <CancelIcon style={{ color: 'red' }} />;
+                    case 'Pending':
+                        return <WarningAmberIcon style={{ color: 'orange' }} />;
+                    default:
+                        return null;
+                }
+            },
+        },
     ];
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 600);
+        };
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
 
     return (
         <section className='details'>
             <div className="container">
                 <div className="_pr_details_wrp">
                     <h2>Participant Details</h2>
+
                     <Paper sx={{ width: '100%', bgcolor: "#121C12" }}>
                         <DataGrid
                             rows={rows}
-                            columns={columns}
+                            columns={isMobile ? columns.filter(col => ['name', 'approvalStatus'].includes(col.field)) : columns}
                             initialState={{ pagination: { paginationModel } }}
                             pageSizeOptions={[10]}
                             onRowClick={handleRowClick}
@@ -162,6 +162,8 @@ export default function ParticipantDetails() {
                                 <p><strong>Email:</strong> {selectedRow.email}</p>
                                 <p><strong>Contact:</strong> {selectedRow.contactNumber}</p>
                                 <p><strong>Batch:</strong> {selectedRow.batch}</p>
+                                <p><strong>Remarks:</strong> {selectedRow.remarks.join()}</p>
+
                                 {selectedRow.image && (
                                     <div>
                                         <img src={selectedRow.paymentScreenshot} alt="Participant" style={{ maxWidth: "100%", marginBottom: "10px" }} />
@@ -188,8 +190,8 @@ export default function ParticipantDetails() {
                     <DialogActions>
                         <Button onClick={() => setOpenDetailsDialog(false)}>Cancel</Button>
                         <Button onClick={handleApprove} color="success">Approve</Button>
-                        <Button onClick={handleReject} color="error">Reject</Button>
-                        <Button onClick={handleSubmitRemark} color="primary">Submit Remark</Button>
+                        {/* <Button onClick={handleReject} color="error">Reject</Button>
+                        <Button onClick={handleSubmitRemark} color="primary">Submit Remark</Button> */}
                     </DialogActions>
                 </Dialog>
             </div>
