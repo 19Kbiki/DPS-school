@@ -30,54 +30,55 @@ export const formValidationSchema = yup.object().shape({
         .matches(/^\d{5,6}$/, "Zip code must be 5 or 6 digits"),
     paymentScreenshot: yup.mixed()
         .required("Payment screenshot is required")
-        .test("fileType", "Only images are allowed", (value) => {
-            return value && ["image/jpeg", "image/jpg", "image/png"].includes(value.type);
+        .test("fileType", "Only images are allowed", function (value) {
+            console.log("-----------------------")
+            console.log(value)
+            console.log(this.parent)
+            return value && value[0] ? ["image/jpeg", "image/png"].includes(value[0].type) : false;
         }),
     password: yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
 });
 
-export function formSubmit() {
-    const formSubmit = async (data) => {
-        try {
-            const formData = new FormData();
-            formData.append("name", data.name);
-            formData.append("gender", data.gender);
-            formData.append("email", data.email);
-            formData.append("contactNumber", data.contactNumber);
-            formData.append("batch", data.batch);
-            formData.append("Package", data.Package);
-            formData.append("city", data.city);
-            formData.append("CountryCode", +91);
-            formData.append("state", data.state);
-            formData.append("country", data.country);
-            formData.append("zipCode", data.zipCode);
-            formData.append("paymentScreenshot", data.paymentScreenshot[0]);
+export async function formSubmit(data) {
+    console.log("formSubmit");
+    try {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("gender", data.gender);
+        formData.append("email", data.email);
+        formData.append("contactNumber", data.contactNumber);
+        formData.append("batch", data.batch);
+        formData.append("Package", data.Package);
+        formData.append("city", data.city);
+        formData.append("CountryCode", +91);
+        formData.append("state", data.state);
+        formData.append("country", data.country);
+        formData.append("zipCode", data.zipCode);
+        formData.append("paymentScreenshot", data.paymentScreenshot[0]);
 
-            // API call to submit form data
-            const response = await fetch(REGISTER_URL, {
-                method: "POST",
-                headers: {
-                    "fun-code": data.password, // Ensure this is correct
-                },
-                body: formData,
-            });
-            if (!response.ok) {
-                throw new Error("Something went wrong while submitting the form");
-            }
-            const result = await response.json();
-            console.log("result----------", result)
-            if (result.success) {
-                toast.success("Registration successful!");
-            } else {
-                toast.error(result.message || "Registration failed. Please try again.");
-            }
-        } catch (error) {
-            toast.error(error.message || "Registration failed. Please try again.");
+        // API call to submit form data
+        const response = await fetch(REGISTER_URL, {
+            method: "POST",
+            headers: {
+                "fun-code": data.password, // Ensure this is correct
+            },
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error("Something went wrong while submitting the form");
         }
-    };
-    return formSubmit;
+        const result = await response.json();
+        console.log("result----------", result)
+        if (result.success) {
+            toast.success("Registration successful!");
+        } else {
+            toast.error(result.message || "Registration failed. Please try again.");
+        }
+    } catch (error) {
+        toast.error(error.message || "Registration failed. Please try again.");
+    }
 }
 
 export const handleImageChange = (file, setImagePreview) => {

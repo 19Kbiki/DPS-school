@@ -65,7 +65,6 @@ function BDialogContent({selectedRow, reloadData, handleClose}) {
         await updateParticipant(updateBody);
         await reloadData();
         setRemarks('');
-        handleClose();
     };
 
     return (
@@ -84,7 +83,7 @@ function BDialogContent({selectedRow, reloadData, handleClose}) {
                             </List>
                         </div>
                     )}
-                    
+
                     <TextField
                         label="Remarks"
                         variant="outlined"
