@@ -1,29 +1,62 @@
-import {handleImageChange} from "../formUtils";
 import React, {useState} from "react";
+import {Button, Box, Typography} from "@mui/material";
 
-export function PaymentSSSection({register, errors}) {
-    const [imagePreview, setImagePreview] = useState(""); // State to hold the image preview
 
-    return (<div className="form-section">
-        <label htmlFor="payment-screenshot"
-               className={`upload-box ${imagePreview ? "with-image" : ""}`}>
-            {imagePreview ? (
-                <img src={imagePreview} alt="Uploaded Screenshot"/>
-            ) : (
-                <div className="placeholder-text">Upload Payment Screenshot</div>
-            )}
-        </label>
-        <input
-            type="file"
-            id="payment-screenshot"
-            accept="image/jpeg,image/jpg image/png"
-            {...register("paymentScreenshot")}
-            onChange={(e) => {
-                const file = e.target.files[0];
-                handleImageChange(file, setImagePreview);
+export const PaymentSSSection = ({register, errors}) => {
+    const [imagePreview, setImagePreview] = useState(null); // For previewing the uploaded image
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+        }
+    };
+
+    return (
+        <Box
+            sx={{
+                textAlign: "center",
+                marginTop: 4,
+                padding: 3,
+                border: "1px solid #ccc",
+                borderRadius: 2,
             }}
-            className="input-input"
-        />
-        <p className="error">{errors.paymentScreenshot?.message}</p>
-    </div>);
-}
+        >
+            <Typography variant="h6" gutterBottom>
+                Upload Image
+            </Typography>
+
+            <input
+                accept="image/*"
+                style={{display: "none"}}
+                id="upload-image"
+                type="file"
+                onChange={handleFileChange}
+                {...register("paymentScreenshot")}
+            />
+            <label htmlFor="upload-image">
+                <Button variant="contained" component="span" color="primary">
+                    Choose File
+                </Button>
+            </label>
+            {imagePreview && (
+                <Box mt={3}>
+                    <Typography variant="body1">Preview:</Typography>
+                    <img
+                        src={imagePreview}
+                        alt="Preview"
+                        style={{
+                            width: "300px",
+                            height: "300px",
+                            objectFit: "cover",
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                        }}
+                    />
+                </Box>
+            )}
+            <p className="error">{errors.paymentScreenshot?.message}</p>
+        </Box>
+    );
+};
