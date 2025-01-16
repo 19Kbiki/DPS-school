@@ -1,10 +1,11 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import './login.scss';
 import axios from 'axios';
-import { LOGIN_URL } from '../../../../config/api';
-import { useNavigate } from 'react-router-dom';
+import {LOGIN_URL} from '../../../../config/api';
+import {useNavigate} from 'react-router-dom';
+import {ROUTES} from "../../../../App";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -23,16 +24,16 @@ export default function Login() {
             password: '',
         },
         validationSchema,
-        onSubmit: async (values, { setSubmitting, setErrors }) => {
+        onSubmit: async (values, {setSubmitting, setErrors}) => {
             try {
                 const response = await axios.post(LOGIN_URL, values);
 
                 console.log('Login successful:', response.data);
                 sessionStorage.setItem('token', response.data.token)
-                navigate("/participent")
+                navigate(ROUTES.PARTICIPANTS)
             } catch (error) {
                 console.error('Login failed:', error.response?.data || error.message);
-                setErrors({ apiError: 'Login failed. Please check your credentials.' });
+                setErrors({apiError: 'Login failed. Please check your credentials.'});
             } finally {
                 setSubmitting(false);
             }

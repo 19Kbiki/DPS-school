@@ -11,6 +11,24 @@ import UserDetails from './pages/status/status';
 import ParticipantDetails from './pages/admin/participantDetails/participantDetails';
 import Login from './pages/admin/login/login.jsx/login';
 
+
+export const ROUTENAME = {
+  REGISTER: 'register',
+  STATUS: 'status',
+  LOGIN: 'login',
+  PARTICIPANTS: 'participants',
+}
+
+export const ROUTES = {
+  HOME: '/',
+  REGISTER: `/${ROUTENAME.REGISTER}`,
+  STATUS: `/${ROUTENAME.STATUS}`,
+  LOGIN: `/${ROUTENAME.LOGIN}`,
+  PARTICIPANTS: `/${ROUTENAME.PARTICIPANTS}`,
+}
+
+
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -25,11 +43,11 @@ function App() {
       <Nav />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="register" element={<RegisterForm />} />
-        <Route path="status/:id" element={<UserDetails />} />
-        <Route path='/login' element={<Login />} />
+        <Route path={ROUTENAME.REGISTER} element={<RegisterForm />} />
+        <Route path={`${ROUTENAME.STATUS}/:id`} element={<UserDetails />} />
+        <Route path={ROUTENAME.LOGIN} element={<Login />} />
         <Route
-          path="/participant"
+          path={ROUTENAME.PARTICIPANTS}
           element={<ProtectedRoute element={<ParticipantDetails />} />}
         />
         <Route path="*" element={<Home />} />
@@ -70,6 +88,6 @@ export function ProtectedRoute({ element: Component, ...rest }) {
   return token ? (
     Component
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to={ROUTES.LOGIN} replace />
   );
 }
