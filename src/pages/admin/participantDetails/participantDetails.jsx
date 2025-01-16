@@ -7,10 +7,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
-import "./participentDitails.scss";
-import { GET_PARTICIPANTS } from '../../../config/Api';
+import "./participantDetails.scss";
+import { PARTICIPANTS } from '../../../config/api';
 
-export default function ParticipentDetails() {
+export default function ParticipantDetails() {
     const [rows, setRows] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
@@ -23,7 +23,7 @@ export default function ParticipentDetails() {
         const fetchData = async () => {
             try {
                 const token = sessionStorage.getItem('token'); // Replace with your token retrieval logic
-                const response = await fetch(GET_PARTICIPANTS, {
+                const response = await fetch(PARTICIPANTS, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

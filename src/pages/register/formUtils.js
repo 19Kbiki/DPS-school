@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import {REGISTER_URL} from "../../config/Api";
+import {REGISTER_URL} from "../../config/api";
 import {toast} from "react-toastify";
 
 export const formValidationSchema = yup.object().shape({

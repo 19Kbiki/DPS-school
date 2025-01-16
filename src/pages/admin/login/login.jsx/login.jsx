@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './login.scss';
 import axios from 'axios';
-import { LOGIN_URL } from '../../../../config/Api';
+import { LOGIN_URL } from '../../../../config/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {

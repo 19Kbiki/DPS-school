@@ -8,7 +8,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import {useEffect} from 'react';
 import UserDetails from './pages/status/status';
-import ParticipentDetails from './pages/admin/participentDetails/participentDetails';
+import ParticipantDetails from './pages/admin/participantDetails/participantDetails';
 import Login from './pages/admin/login/login.jsx/login';
 
 function App() {
@@ -29,8 +29,8 @@ function App() {
         <Route path="status/:id" element={<UserDetails />} />
         <Route path='/login' element={<Login />} />
         <Route
-          path="/participent"
-          element={<ProtectedRoute element={<ParticipentDetails />} />}
+          path="/participant"
+          element={<ProtectedRoute element={<ParticipantDetails />} />}
         />
         <Route path="*" element={<Home />} />
       </Routes>
