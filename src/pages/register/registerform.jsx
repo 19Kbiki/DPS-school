@@ -11,9 +11,16 @@ import {PaymentSection} from "./components/paymentSection";
 import {PackageSection} from "./components/packageSection";
 import {PaymentSSSection} from "./components/paymentSSSection";
 import {SecuritySection} from "./components/securitySection";
+import { useNavigate, useParams } from "react-router-dom";
+import { ROUTES } from "../../App";
 
 
 const RegisterForm = () => {
+
+    const navigate = useNavigate();
+    const handelNavigate = () => {
+        navigate(ROUTES.STATUS )
+    }
 
     const {
         register,

@@ -1,6 +1,9 @@
 import * as yup from "yup";
 import {REGISTER_URL} from "../../config/api";
 import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../App";
+
 
 export const formValidationSchema = yup.object().shape({
     name: yup.string()
@@ -40,7 +43,6 @@ export const formValidationSchema = yup.object().shape({
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
 });
-
 export async function formSubmit(data) {
     console.log("formSubmit");
     try {
@@ -73,6 +75,8 @@ export async function formSubmit(data) {
         console.log("result----------", result)
         if (result.success) {
             toast.success("Registration successful!");
+            navigate(ROUTES.STATUS + "/" + data.contactNumber )
+
         } else {
             toast.error(result.message || "Registration failed. Please try again.");
         }
