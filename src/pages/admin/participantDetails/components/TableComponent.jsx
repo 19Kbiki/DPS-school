@@ -6,7 +6,8 @@ import {DialogComponent} from "./DialogComponent";
 
 export const TableComponent = () => {
     const [rows, setRows] = useState([]);
-
+    const [open, setOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
     const fetchData = async () => {
         try {
             const token = sessionStorage.getItem('token'); // Replace with your token retrieval logic
@@ -40,8 +41,7 @@ export const TableComponent = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    const [open, setOpen] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
+
     // Function to handle row click
     const handleRowClick = (row) => {
         setSelectedRow(row);

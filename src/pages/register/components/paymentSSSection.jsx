@@ -22,7 +22,7 @@ export function PaymentSSSection({register, errors}) {
                 const file = e.target.files[0];
                 handleImageChange(file, setImagePreview);
             }}
-            className="input-input"
+            className="upload-input"
         />
         <p className="error">{errors.paymentScreenshot?.message}</p>
     </div>);
