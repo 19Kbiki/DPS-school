@@ -1,18 +1,9 @@
-import React, {useState} from "react";
-import {Button, Box, Typography} from "@mui/material";
+import React from "react";
+import {Box, Button, Typography} from "@mui/material";
 
 
-export const PaymentSSSection = ({register, errors}) => {
-    const [imagePreview, setImagePreview] = useState(null); // For previewing the uploaded image
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
-        }
-    };
-
+export const PaymentSSSection = ({register, errors, watch}) => {
+    const registeredData = watch("paymentScreenshot");
     return (
         <Box
             sx={{
@@ -32,7 +23,6 @@ export const PaymentSSSection = ({register, errors}) => {
                 style={{display: "none"}}
                 id="upload-image"
                 type="file"
-                onChange={handleFileChange}
                 {...register("paymentScreenshot")}
             />
             <label htmlFor="upload-image">
@@ -40,11 +30,11 @@ export const PaymentSSSection = ({register, errors}) => {
                     Choose File
                 </Button>
             </label>
-            {imagePreview && (
+            {registeredData && registeredData[0] && (
                 <Box mt={3}>
                     <Typography variant="body1">Preview:</Typography>
                     <img
-                        src={imagePreview}
+                        src={URL.createObjectURL(registeredData[0])}
                         alt="Preview"
                         style={{
                             width: "300px",

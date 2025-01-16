@@ -1,7 +1,6 @@
 import * as yup from "yup";
 import {REGISTER_URL} from "../../config/api";
 import {toast} from "react-toastify";
-import {ROUTES} from "../../App";
 
 
 export const formValidationSchema = yup.object().shape({
@@ -20,7 +19,7 @@ export const formValidationSchema = yup.object().shape({
     batch: yup.string()
         .required("Batch is required"),
     Package: yup.string()
-        .required("Please select Packge"),
+        .required("Please select Package"),
     city: yup.string()
         .required("City is required"),
     state: yup.string()
@@ -33,9 +32,7 @@ export const formValidationSchema = yup.object().shape({
     paymentScreenshot: yup.mixed()
         .required("Payment screenshot is required")
         .test("fileType", "Only images are allowed", function (value) {
-            console.log("-----------------------")
-            console.log(value)
-            console.log(this.parent)
+            console.log(value);
             return value && value[0] ? ["image/jpeg", "image/png"].includes(value[0].type) : false;
         }),
     password: yup.string()

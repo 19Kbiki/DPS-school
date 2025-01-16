@@ -11,8 +11,8 @@ import {PaymentSection} from "./components/paymentSection";
 import {PackageSection} from "./components/packageSection";
 import {PaymentSSSection} from "./components/paymentSSSection";
 import {SecuritySection} from "./components/securitySection";
-import { useNavigate, useParams } from "react-router-dom";
-import { ROUTES } from "../../App";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "../../App";
 
 
 const RegisterForm = () => {
@@ -27,6 +27,7 @@ const RegisterForm = () => {
         register,
         handleSubmit,
         formState: {errors},
+        watch
     } = useForm({resolver: yupResolver(formValidationSchema),});
 
 
@@ -47,7 +48,7 @@ const RegisterForm = () => {
                     <AddressSection register={register} errors={errors}/>
                     <PaymentSection/>
                     <PackageSection register={register} errors={errors}/>
-                    <PaymentSSSection register={register} errors={errors}/>
+                    <PaymentSSSection register={register} errors={errors} watch={watch}/>
                     <SecuritySection register={register} errors={errors}/>
                     <div className="register-button">
                         <button type="submit">Register</button>
