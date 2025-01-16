@@ -49,7 +49,6 @@ function BDialogContent({selectedRow, reloadData, handleClose}) {
         setRemarks(event.target.value);
     };
     const handleSubmitRemark = async () => {
-        console.log("Handle Submit Remak called")
         if (!selectedRow || !remarks) {
             return;
         }
