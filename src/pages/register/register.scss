@@ -7,7 +7,7 @@
   background-position: center;
   // padding: 20px;
   color: #fff;
-  background-image: url("../../../public/assets/frm_bg.png");
+  background-image: url("../../../public/assets/frm_bg.webp");
   // background-size:cover;
   background-position: bottom;
   object-fit: fill;
@@ -138,6 +138,14 @@
     display: none;
   }
 }
+.security{
+  margin-top: 2rem;
+  p{
+    font-size: 0.6rem;
+    color: #ccc;
+    font-style: italic;
+  }
+}
 
 /* Payment Section */
 .payment_wrp {
@@ -239,7 +247,7 @@
     background-size: cover;
     background-position: center;
     color: #fff;
-    background-image: url("../../../public/assets/frm_bg.png");
+    background-image: url("../../../public/assets/frm_bg.webp");
     background-position: bottom;
     object-fit: fill;
     .frm_info {
@@ -286,6 +294,7 @@
 
   .form-section {
     margin-bottom: 10px;
+    
 
     h3 {
       margin-bottom: 10px;
@@ -372,6 +381,7 @@
       display: none;
     }
   }
+
 
   /* Payment Section */
   .payment_wrp {

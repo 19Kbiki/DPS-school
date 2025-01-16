@@ -32,7 +32,6 @@ export const PaymentSSSection = ({register, errors, watch}) => {
             </label>
             {registeredData && registeredData[0] && (
                 <Box mt={3}>
-                    <Typography variant="body1">Preview:</Typography>
                     <img
                         src={URL.createObjectURL(registeredData[0])}
                         alt="Preview"

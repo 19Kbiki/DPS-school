@@ -5,7 +5,7 @@ export default function LocationSection() {
         <section className="location">
             <div className="container">
                 <h2>{locationsSection.title}</h2>
-                <img src="/assets/light_bg_2.png" alt="" />
+                <img src="/assets/light_bg_2.webp" alt="" />
                 <div className="loc_wrp">
                 <div className="lcl_info">
                     <h3>{locationsSection.hotelName}</h3>

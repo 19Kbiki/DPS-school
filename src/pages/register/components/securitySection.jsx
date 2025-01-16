@@ -1,11 +1,11 @@
 import React from "react";
 
 export function SecuritySection({register, errors}) {
-    return (<div className="form-section">
+    return (<div className="form-section security">
         <div className="form_wrp">
             <div>
                 <h5>Security Check</h5>
-                <p>Type the password shared in the group chat.</p>
+                <p>**Type the password shared in the group chat.</p>
             </div>
             <div>
                 <input type="password" placeholder="Password" {...register("password")}

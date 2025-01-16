@@ -3,7 +3,7 @@
 @import "../../../../scss/variables.scss";
 .login{
     padding: 5rem 0 ;
-    background-image: url("../../../../../public/assets/banner.png");
+    background-image: url("../../../../../public/assets/banner.webp");
     background-size: cover;
 
     .login_wrp{
@@ -36,12 +36,10 @@
     }
 }
 
-
-
 @media screen and (max-width:578px) {
     .login{
         padding: 3rem 0 ;
-        background-image: url("../../../../../public/assets/banner.png");
+        background-image: url("../../../../../public/assets/banner.webp");
         background-size: cover;
     
         .login_wrp{

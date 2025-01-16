@@ -13,12 +13,12 @@ export default function AboutSection() {
             <div className="container">
                 <div className="abt_wrp">
                     <div className="imges">
-                        <img  className="about_img" src="/assets/about.png" alt="" />
+                        <img  className="about_img" src="/assets/about.webp" alt="" />
                     </div>
                     <div className="abt_info">
                         <h2>{aboutSection.title.main}</h2>
                         {aboutSection.desktop.map((data, index) => <p key={index}>{data}</p>)}
-                        <img src="/assets/light_bg.png" alt="" />
+                        <img src="/assets/light_bg.webp" alt="" />
                         <button onClick={handelClick}>
                             Register now
                         </button>
