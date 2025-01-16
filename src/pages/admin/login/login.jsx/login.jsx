@@ -30,6 +30,7 @@ export default function Login() {
 
                 console.log('Login successful:', response.data);
                 sessionStorage.setItem('token', response.data.token)
+                sessionStorage.setItem('user', response.data.user)
                 navigate(ROUTES.PARTICIPANTS)
             } catch (error) {
                 console.error('Login failed:', error.response?.data || error.message);
