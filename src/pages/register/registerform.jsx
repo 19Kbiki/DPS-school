@@ -34,7 +34,7 @@ const RegisterForm = () => {
 
             <div className="container">
                 <form className="form-container" onSubmit={handleSubmit(formSubmit)}>
-                    <PersonalDetails register={register} errors={errors}></PersonalDetails>
+                    <PersonalDetails register={register} errors={errors}/>
                     <BatchSection register={register} errors={errors}/>
                     <AddressSection register={register} errors={errors}/>
                     <PaymentSection/>
