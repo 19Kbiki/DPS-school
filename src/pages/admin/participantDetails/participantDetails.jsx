@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import React, {useEffect, useState} from 'react';
+import {DataGrid} from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -12,13 +12,31 @@ import { PARTICIPANTS } from '../../../config/api';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import {APPROVAL_STATUS} from "../../../config/constant";
+
+async function updateParticipant(updateBody) {
+    try {
+        const token = sessionStorage.getItem('token');
+        await fetch(PARTICIPANTS, {
+            method: 'PUT',
+            headers: {
+                contentType: 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updateBody),
+        })
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
 export default function ParticipantDetails() {
     const [rows, setRows] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
     const [remark, setRemark] = useState("");
 
-    const paginationModel = { page: 0, pageSize: 5 };
+    const paginationModel = {page: 0, pageSize: 5};
 
     // Fetch data from API
     useEffect(() => {
@@ -55,21 +73,28 @@ export default function ParticipantDetails() {
         setOpenDetailsDialog(true);
     };
 
-    const handleApprove = async () => {
-        try {
-            const token = sessionStorage.getItem('token');
-            await fetch(`/approve/${selectedRow.id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ status: "Approved" }),
-            });
-            console.log("Approved:", selectedRow);
-        } catch (error) {
-            console.error("Error approving participant:", error);
+    const handleSubmit = async (approveStatus) => {
+        const updateBody = {
+            // contactNumber: selectedRow.contactNumber,
+            approvalStatus: approveStatus,
+            // approvedBy: selectedRow.name,
         }
+        await updateParticipant(updateBody);
+        setOpenDetailsDialog(false);
+    };
+
+    const handleSubmitRemark = async () => {
+        let remarks = selectedRow.remarks;
+        if (!remarks) {
+            remarks = []
+        }
+        remarks.push(remark);
+        const updateBody = {
+            // contactNumber: selectedRow.contactNumber,
+            remarks: remarks,
+        }
+        await updateParticipant(updateBody);
+        setRemark("");
         setOpenDetailsDialog(false);
     };
 
@@ -166,13 +191,12 @@ export default function ParticipantDetails() {
 
                                 {selectedRow.image && (
                                     <div>
-                                        <img src={selectedRow.paymentScreenshot} alt="Participant" style={{ maxWidth: "100%", marginBottom: "10px" }} />
+                                        <img src={selectedRow.paymentScreenshot} alt="Participant"
+                                             style={{maxWidth: "100%", marginBottom: "10px"}}/>
                                         <Button
                                             variant="outlined"
                                             onClick={() => window.open(selectedRow.image, "_blank")}
-                                        >
-                                            Download Image
-                                        </Button>
+                                        >Download Image</Button>
                                     </div>
                                 )}
                                 <TextField
@@ -182,16 +206,16 @@ export default function ParticipantDetails() {
                                     onChange={(e) => setRemark(e.target.value)}
                                     multiline
                                     rows={3}
-                                    style={{ marginTop: "20px" }}
+                                    style={{marginTop: "20px"}}
                                 />
                             </div>
                         )}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => setOpenDetailsDialog(false)}>Cancel</Button>
-                        <Button onClick={handleApprove} color="success">Approve</Button>
-                        {/* <Button onClick={handleReject} color="error">Reject</Button>
-                        <Button onClick={handleSubmitRemark} color="primary">Submit Remark</Button> */}
+                        <Button onClick={handleSubmit(APPROVAL_STATUS.APPROVED)} color="success">Approve</Button>
+                        <Button onClick={handleSubmit(APPROVAL_STATUS.REJECTED)} color="error">Reject</Button>
+                        <Button onClick={handleSubmitRemark} color="primary">Submit Remark</Button>
                     </DialogActions>
                 </Dialog>
             </div>
