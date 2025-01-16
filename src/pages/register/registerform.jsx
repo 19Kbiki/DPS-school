@@ -18,8 +18,9 @@ import { ROUTES } from "../../App";
 const RegisterForm = () => {
 
     const navigate = useNavigate();
-    const handelNavigate = () => {
-        navigate(ROUTES.STATUS )
+
+    const handleRoute = (id) => {
+        navigate(`${ROUTES.STATUS}/${id}`);
     }
 
     const {
@@ -40,7 +41,7 @@ const RegisterForm = () => {
             </div>
 
             <div className="container">
-                <form className="form-container" onSubmit={handleSubmit(formSubmit)}>
+                <form className="form-container" onSubmit={handleSubmit((data) => formSubmit(data, handleRoute))}>
                     <PersonalDetails register={register} errors={errors}/>
                     <BatchSection register={register} errors={errors}/>
                     <AddressSection register={register} errors={errors}/>
