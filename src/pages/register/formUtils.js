@@ -40,6 +40,7 @@ export const formValidationSchema = yup.object().shape({
         .required("Password is required"),
 });
 
+
 export async function formSubmit(data, handleRoute) {
     console.log("formSubmit");
     try {
@@ -51,7 +52,7 @@ export async function formSubmit(data, handleRoute) {
         formData.append("batch", data.batch);
         formData.append("Package", data.Package);
         formData.append("city", data.city);
-        formData.append("CountryCode", +91);
+        formData.append("CountryCode", "+91");
         formData.append("state", data.state);
         formData.append("country", data.country);
         formData.append("zipCode", data.zipCode);
@@ -65,17 +66,36 @@ export async function formSubmit(data, handleRoute) {
             },
             body: formData,
         });
-        if (!response.ok) {
-            throw new Error("Something went wrong while submitting the form");
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log("result----------", result);
+            toast.success("Registration successful!");
+            handleRoute(data.contactNumber, true);
+            return;
         }
-        const result = await response.json();
-        console.log("result----------", result)
-        toast.success("Registration successful!");
-        handleRoute(data.contactNumber)
+
+        // Handle specific HTTP status codes
+        switch (response.status) {
+            case 401:
+                toast.error("Registration is not permitted for your account.");
+                break;
+            case 429:
+                toast.error("Too many requests. Please try again later.");
+                break;
+            case 409:
+                toast.error(
+                    "You are already registered. Please contact the Admin for assistance."
+                );
+                break;
+            default:
+                throw new Error("Something went wrong while submitting the form");
+        }
     } catch (error) {
         toast.error(error.message || "Registration failed. Please try again.");
     }
 }
+
 
 export const handleImageChange = (file, setImagePreview) => {
     if (file && ["image/jpeg", "image/png"].includes(file.type)) {

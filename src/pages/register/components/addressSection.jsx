@@ -5,7 +5,7 @@ export function AddressSection({register, errors}) {
         <h3>Address</h3>
         <div className="form_wrp">
             <div>
-                <input type="text" placeholder="City *" {...register("city")} className="form-input"/>
+                <input type="text" placeholder="City " {...register("city")} className="form-input"/>
                 <p className="error">{errors.city?.message}</p>
 
             </div>

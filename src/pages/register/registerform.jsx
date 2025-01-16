@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import "./register.scss"
@@ -16,18 +16,17 @@ import {ROUTES} from "../../App";
 
 
 const RegisterForm = () => {
-
     const navigate = useNavigate();
-
     const handleRoute = (id) => {
-        navigate(`${ROUTES.STATUS}/${id}`);
+        navigate(`${ROUTES.STATUS}/${id}/isFirstTime=${true}`);
     }
 
     const {
         register,
         handleSubmit,
         formState: {errors},
-        watch
+        watch,
+        setValue
     } = useForm({resolver: yupResolver(formValidationSchema),});
 
 
@@ -48,10 +47,12 @@ const RegisterForm = () => {
                     <AddressSection register={register} errors={errors}/>
                     <PaymentSection/>
                     <PackageSection register={register} errors={errors}/>
-                    <PaymentSSSection register={register} errors={errors} watch={watch}/>
+                    <PaymentSSSection register={register} errors={errors} watch={watch} setValue={setValue}/>
                     <SecuritySection register={register} errors={errors}/>
                     <div className="register-button">
-                        <button type="submit">Register</button>
+                        <button type="submit" >
+                            Register
+                        </button>
                     </div>
                 </form>
             </div>

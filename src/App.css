@@ -8,3 +8,9 @@ body {
   margin: 0;
   color: #fff;
 }
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

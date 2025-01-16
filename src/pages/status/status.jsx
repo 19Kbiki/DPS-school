@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {REGISTER_URL} from "../../config/api";
-import {Box, Card, CardContent, Divider, Typography} from "@mui/material";
+import { REGISTER_URL } from "../../config/api";
+import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 const UserDetails = () => {
     const [userData, setUserData] = useState(null);
@@ -36,7 +36,7 @@ const UserDetails = () => {
     }
 
     return (
-        <div style={{ padding: "5rem", maxWidth: "800px", margin: "auto" }}>
+        <div style={{ padding: "5rem", margin: "auto" }}>
             {userData ? (
                 <div>
                     <UserDetailsCard userData={userData} />
@@ -52,10 +52,18 @@ export default UserDetails;
 
 
 const UserDetailsCard = ({ userData }) => {
+    const userDetails = [
+        { label: "Name", value: userData.name || "Biki Karmakar" },
+        { label: "Contact No", value: `${userData.countryCode}-${userData.contactNumber}` },
+        { label: "Email", value: userData.email || "abc@gmail.com" },
+        { label: "Batch", value: userData.batch || "2010" },
+        { label: "Address", value: `${userData.city}, ${userData.state}, ${userData.country}` },
+        { label: "Registration Status", value: userData.registrationStatus || "AWAITING APPROVAL" },
+        { label: "Remarks", value: userData.remarks || "Pending with Admin for approval" },
+    ];
     return (
         <Card
             sx={{
-                maxWidth: 600,
                 margin: "20px auto",
                 boxShadow: 3,
                 borderRadius: 3,
@@ -67,32 +75,15 @@ const UserDetailsCard = ({ userData }) => {
                     User Details
                 </Typography>
                 <Divider sx={{ marginBottom: 2 }} />
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                    <Typography>
-                        <strong>Name:</strong> {userData.name || "Biki Karmakar"}
-                    </Typography>
-                    <Typography>
-                        <strong>Contact No:</strong> {userData.countryCode}-
-                        {userData.contactNumber}
-                    </Typography>
-                    <Typography>
-                        <strong>Email:</strong> {userData.email || "abc@gmail.com"}
-                    </Typography>
-                    <Typography>
-                        <strong>Batch:</strong> {userData.batch || "2010"}
-                    </Typography>
-                    <Typography>
-                        <strong>Address:</strong> {userData.city}, {userData.state},{" "}
-                        {userData.country}
-                    </Typography>
-                    <Typography>
-                        <strong>Registration Status:</strong>{" "}
-                        {userData.registrationStatus || "AWAITING APPROVAL"}
-                    </Typography>
-                    <Typography>
-                        <strong>Remarks:</strong>{" "}
-                        {userData.remarks || "Pending with Admin for approval"}
-                    </Typography>
+                <Box>
+                    <div className="details_wrp">
+                    {userDetails.map(({ label, value }, index) => (
+                        <Typography key={index}>
+                            <strong>{label}:</strong> {value}
+                        </Typography>
+                    ))}
+
+                    </div>
                 </Box>
             </CardContent>
         </Card>
