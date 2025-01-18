@@ -1,0 +1,56 @@
+// Additional styles to add to the existing SCSS file
+.participant-table {
+  // ... (keep existing styles) ...
+
+  &__mobile-status {
+    display: none;  // Hidden by default on desktop
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &--approved {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10B981;
+      }
+
+      &--pending {
+        background: rgba(245, 158, 11, 0.15);
+        color: #F59E0B;
+      }
+
+      &--rejected {
+        background: rgba(239, 68, 68, 0.15);
+        color: #EF4444;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__status {
+      display: none;  // Hide full status badge on mobile
+    }
+
+    &__mobile-status {
+      display: flex;  // Show mobile status icon
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &__row {
+      position: relative;  // For absolute positioning of status icon
+
+      td:first-child {
+        padding-right: 3rem;  // Make space for the status icon
+      }
+    }
+  }
+}

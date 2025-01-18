@@ -1,0 +1,240 @@
+// Variables
+$pry-color: #C99A46;
+$sec-color: #E0B757;
+$bg-color: #031102;
+$transition: all 0.3s ease;
+
+.participant-table {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, rgba($bg-color, 0.95), rgba($bg-color, 0.98));
+  min-height: 100vh;
+
+  &__header {
+    color: $pry-color;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  &__container {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($pry-color, 0.1);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    th {
+      background: rgba($pry-color, 0.9);
+      color: white;
+      font-weight: 600;
+      text-align: left;
+      padding: 1rem;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+
+      &:first-child { border-top-left-radius: 0.5rem; }
+      &:last-child { border-top-right-radius: 0.5rem; }
+    }
+  }
+
+  &__row {
+    cursor: pointer;
+    transition: $transition;
+    color: white;
+
+    &:hover {
+      background: rgba($pry-color, 0.1);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba($pry-color, 0.1);
+    }
+
+    &--expanded {
+      background: rgba($pry-color, 0.05);
+    }
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    gap: 0.5rem;
+
+    &--approved {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981;
+    }
+
+    &--pending {
+      background: rgba(245, 158, 11, 0.1);
+      color: #F59E0B;
+    }
+
+    &--rejected {
+      background: rgba(239, 68, 68, 0.1);
+      color: #EF4444;
+    }
+  }
+
+  &__expand {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba($pry-color, 0.1);
+    margin: 0 1rem;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    animation: slideDown 0.3s ease;
+
+    &-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__section {
+    &-title {
+      color: $sec-color;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &-label {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.875rem;
+    }
+
+    &-value {
+      color: white;
+      font-size: 1rem;
+    }
+  }
+
+  &__remarks {
+    &-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba($pry-color, 0.2);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      color: white;
+      margin-top: 0.5rem;
+      resize: vertical;
+      min-height: 100px;
+      transition: $transition;
+
+      &:focus {
+        outline: none;
+        border-color: $pry-color;
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: $transition;
+    border: none;
+    cursor: pointer;
+
+    &--approve {
+      background: linear-gradient(145deg, #10B981, #059669);
+      color: white;
+      &:hover { transform: translateY(-2px); }
+    }
+
+    &--reject {
+      background: linear-gradient(145deg, #EF4444, #DC2626);
+      color: white;
+      &:hover { transform: translateY(-2px); }
+    }
+  }
+
+  &__image {
+    max-width: 200px;
+    border-radius: 0.5rem;
+    border: 2px solid rgba($pry-color, 0.2);
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    &__header {
+      font-size: 1.5rem;
+    }
+
+    //th:not(:first-child):not(:last-child),
+    //td:not(:first-child):not(:last-child) {
+    //  display: none;
+    //}
+
+    &__expand {
+      margin: 0.5rem;
+      padding: 1rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

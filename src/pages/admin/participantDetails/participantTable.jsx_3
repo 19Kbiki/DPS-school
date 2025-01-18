@@ -1,0 +1,217 @@
+
+import React, {useState} from 'react';
+import {
+    User, ChevronDown, ChevronUp, Mail, Phone, MapPin,
+    Calendar, CheckCircle, XCircle, Clock, Image as ImageIcon,
+    MessageSquare, Check, X, Building, Globe, Users,
+    CheckCircle2, AlertCircle
+} from 'lucide-react';
+
+import './participantTable.scss';
+
+
+const ParticipantTable = ({ participants, onApprove, onReject }) => {
+    // ... (keep existing state and helper functions) ...
+    const [expandedRow, setExpandedRow] = useState(null);
+    const [remarks, setRemarks] = useState('');
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+    };
+
+    const getStatusClass = (status) => {
+        switch (status.toUpperCase()) {
+            case 'APPROVED':
+                return 'participant-table__status--approved';
+            case 'PENDING':
+                return 'participant-table__status--pending';
+            default:
+                return 'participant-table__status--rejected';
+        }
+    };
+
+    const getStatusIcon = (status) => {
+        switch (status.toUpperCase()) {
+            case 'APPROVED':
+                return <CheckCircle size={16}/>;
+            case 'PENDING':
+                return <Clock size={16}/>;
+            default:
+                return <XCircle size={16}/>;
+        }
+    };
+
+    const handleRowClick = (index) => {
+        setExpandedRow(expandedRow === index ? null : index);
+        setRemarks('');
+    };
+
+    const handleApprove = (participant) => {
+        onApprove(participant, remarks);
+        setRemarks('');
+    };
+
+    const handleReject = (participant) => {
+        onReject(participant, remarks);
+        setRemarks('');
+    };
+
+
+    const getMobileStatusIcon = (status) => {
+        const iconProps = { size: 20, strokeWidth: 2.5 };
+
+        switch (status.toUpperCase()) {
+            case 'APPROVED':
+                return (
+                    <div className="participant-table__mobile-status">
+                        <div className="participant-table__mobile-status-icon participant-table__mobile-status-icon--approved">
+                            <CheckCircle2 {...iconProps} />
+                        </div>
+                    </div>
+                );
+            case 'PENDING':
+                return (
+                    <div className="participant-table__mobile-status">
+                        <div className="participant-table__mobile-status-icon participant-table__mobile-status-icon--pending">
+                            <AlertCircle {...iconProps} />
+                        </div>
+                    </div>
+                );
+            default:
+                return (
+                    <div className="participant-table__mobile-status">
+                        <div className="participant-table__mobile-status-icon participant-table__mobile-status-icon--rejected">
+                            <XCircle {...iconProps} />
+                        </div>
+                    </div>
+                );
+        }
+    };
+
+    return (
+        <div className="participant-table">
+            <h1 className="participant-table__header">Participant Management</h1>
+            <div className="participant-table__container">
+                <table className="participant-table__table">
+                    <thead>
+                    <tr>
+                        <th>Participant</th>
+                        <th>Email</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {participants.map((participant, index) => (
+                        <React.Fragment key={index}>
+                            <tr
+                                className={`participant-table__row ${
+                                    expandedRow === index ? 'participant-table__row--expanded' : ''
+                                }`}
+                                onClick={() => handleRowClick(index)}
+                            >
+                                <td>
+                                    <div className="flex items-center gap-3">
+                                        <User size={20} className="text-[#C99A46]" />
+                                        {participant.name}
+                                    </div>
+                                    {/* Mobile Status Icon */}
+                                    {getMobileStatusIcon(participant.approvalStatus)}
+                                </td>
+                                <td>{participant.email}</td>
+                                <td>{participant.batch}</td>
+                                <td>
+                                    {/* Desktop Status Badge */}
+                                    <span className={`participant-table__status ${getStatusClass(participant.approvalStatus)}`}>
+                      {getStatusIcon(participant.approvalStatus)}
+                                        {participant.approvalStatus}
+                    </span>
+                                </td>
+                                <td>
+                                    {expandedRow === index ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                                </td>
+                            </tr>
+                            {/* ... (keep existing expanded row content) ... */}
+                        </React.Fragment>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+
+// Example usage component
+const ParticipantManagement = () => {
+    const [participants, setParticipants] = useState([{
+        name: "John Doe",
+        email: "john@example.com",
+        gender: "Male",
+        countryCode: 1,
+        contactNumber: 1234567890,
+        batch: 2024,
+        city: "New York",
+        state: "NY",
+        country: "USA",
+        paymentScreenshot: "/path/to/screenshot.jpg",
+        approvalStatus: "PENDING",
+        remarks: ["Initial application received"],
+        approvedBy: "",
+        approvedOn: null,
+        registeredOn: new Date("2024-01-15").toISOString()
+    }, {
+        name: "Jane Smith",
+        email: "jane@example.com",
+        gender: "Female",
+        countryCode: 44,
+        contactNumber: 9876543210,
+        batch: 2024,
+        city: "London",
+        state: "England",
+        country: "UK",
+        paymentScreenshot: "/path/to/screenshot.jpg",
+        approvalStatus: "REJECTED",
+        remarks: ["Documents verified", "Payment confirmed"],
+        approvedBy: "Admin User",
+        approvedOn: new Date("2024-01-16").toISOString(),
+        registeredOn: new Date("2024-01-14").toISOString()
+    }]);
+
+    const handleApprove = (participant, remarks) => {
+        setParticipants(prevParticipants => prevParticipants.map(p => {
+            if (p.email === participant.email) {
+                return {
+                    ...p,
+                    approvalStatus: "APPROVED",
+                    remarks: [...p.remarks, remarks].filter(Boolean),
+                    approvedBy: "Current Admin",
+                    approvedOn: new Date().toISOString()
+                };
+            }
+            return p;
+        }));
+    };
+
+    const handleReject = (participant, remarks) => {
+        setParticipants(prevParticipants => prevParticipants.map(p => {
+            if (p.email === participant.email) {
+                return {
+                    ...p, approvalStatus: "REJECTED", remarks: [...p.remarks, remarks].filter(Boolean),
+                };
+            }
+            return p;
+        }));
+    };
+
+    return (<ParticipantTable
+            participants={participants}
+            onApprove={handleApprove}
+            onReject={handleReject}
+        />);
+};
+
+export default ParticipantManagement;

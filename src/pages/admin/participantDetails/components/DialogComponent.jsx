@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import {APPROVAL_STATUS} from "../../../../config/constant";
 import React, {useState} from "react";
 import {updateParticipant} from "../apiCall";
+import ParticipantDetails from "./participantDetails";
 
 export function DialogComponent({open, setOpen, selectedRow, setSelectedRow, reloadData}) {
     const handleApproval = async (approveStatus) => {
@@ -70,6 +71,7 @@ function BDialogContent({selectedRow, reloadData, handleClose}) {
         <DialogContent>
             {selectedRow && (
                 <div>
+                    <ParticipantDetails participant={selectedRow} />
                     <p><strong>Name:</strong> {selectedRow.name}</p>
                     <p><strong>Approval Status:</strong> {selectedRow.approvalStatus}</p>
                     {Array.isArray(selectedRow?.remarks) && (
