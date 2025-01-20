@@ -13,12 +13,16 @@ import {PaymentSSSection} from "./components/paymentSSSection";
 import {SecuritySection} from "./components/securitySection";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../App";
+import {CircularProgress, Typography} from "@mui/material";
 
 
 const RegisterForm = () => {
     const navigate = useNavigate();
+    const [statusMessage, setStatusMessage] = useState("");
+    const [isVisible, setIsVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const handleRoute = (id) => {
-        navigate(`${ROUTES.STATUS}/${id}/isFirstTime=${true}`);
+        navigate(`${ROUTES.STATUS}/${id}`);
     }
 
     const {
@@ -41,7 +45,7 @@ const RegisterForm = () => {
             </div>
 
             <div className="container">
-                <form className="form-container" onSubmit={handleSubmit((data) => formSubmit(data, handleRoute))}>
+                <form className="form-container" onSubmit={handleSubmit((data) => formSubmit(data, handleRoute, setStatusMessage, setIsVisible, isLoading, setIsLoading))}>
                     <PersonalDetails register={register} errors={errors}/>
                     <BatchSection register={register} errors={errors}/>
                     <AddressSection register={register} errors={errors}/>
@@ -49,8 +53,25 @@ const RegisterForm = () => {
                     <PackageSection register={register} errors={errors}/>
                     <PaymentSSSection register={register} errors={errors} watch={watch} setValue={setValue}/>
                     <SecuritySection register={register} errors={errors}/>
+                    {isVisible && (
+                        <Typography
+                            variant="body1"
+                            style={{
+                                textAlign: 'center',
+                                border: "2px solid #E0B757", // Add a border with the theme color
+                                borderRadius: "5px",         // Slightly rounded corners
+                                padding: "10px 15px",        // Padding for spacing inside the border
+                                color: "#E0B757",            // Text color
+                                marginBottom: "10px",
+                                marginTop: "10px",
+                            }}
+                        >
+                            {statusMessage}
+                        </Typography>
+                    )}
                     <div className="register-button">
                         <button type="submit" >
+                            {isLoading && (<CircularProgress size={20} color="#C99A46"/>)}
                             Register
                         </button>
                     </div>

@@ -1,0 +1,149 @@
+// Variables
+$pry-color: #C99A46;
+$sec-color: #E0B757;
+$bg-color: #031102;
+$transition: all 0.3s ease;
+
+.image-placeholder {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  width: 200px;
+  height: 350px;
+
+  &__container {
+    background: rgba($bg-color, 0.02);
+    border: 2px dashed rgba($pry-color, 0.3);
+    border-radius: 12px;
+    transition: $transition;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      border-color: $pry-color;
+      background: rgba($pry-color, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba($bg-color, 0.12);
+
+      .image-placeholder__icon-wrapper {
+        background: rgba($pry-color, 0.15);
+        transform: scale(1.1);
+
+        svg {
+          color: $pry-color;
+          transform: translateY(-2px);
+        }
+      }
+
+      .image-placeholder__text {
+        color: $pry-color;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+                      circle,
+                      rgba($sec-color, 0.1) 0%,
+                      transparent 70%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover::before {
+      opacity: 1;
+      animation: rotate 8s linear infinite;
+    }
+  }
+
+  &__icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba($pry-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+    position: relative;
+    overflow: hidden;
+
+    svg {
+      transition: $transition;
+      color: rgba($pry-color, 0.7);
+    }
+  }
+
+  &__text {
+    font-size: 0.95rem;
+    color: rgba($pry-color, 0.7);
+    font-weight: 500;
+    transition: $transition;
+  }
+
+  // Loading State
+  &__loading {
+    .image-placeholder__icon-wrapper {
+      background: rgba($sec-color, 0.15);
+      animation: pulse 2s infinite;
+      svg {
+        animation: spin 2s linear infinite;
+        color: $sec-color;
+      }
+    }
+
+    .image-placeholder__text {
+      color: $sec-color;
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 300px;
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($sec-color, 0.4);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba($sec-color, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($sec-color, 0);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

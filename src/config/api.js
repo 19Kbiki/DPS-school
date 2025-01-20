@@ -4,3 +4,5 @@ export const BASE_ADMIN_URL_VERSION = "/api/v1/admin";
 export const LOGIN_URL = `${BASE_URL}${BASE_ADMIN_URL_VERSION}/login`;
 export const PARTICIPANTS = `${BASE_URL}${BASE_ADMIN_URL_VERSION}/participants`;
 export const REGISTER_URL = `${BASE_URL}${BASE_URL_VERSION}/register`;
+export const REGISTER_STATUS_URL = `${REGISTER_URL}/status`;
+export const IMAGE_URL = `${BASE_URL}${BASE_URL_VERSION}/image`;

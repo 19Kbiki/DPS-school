@@ -1,4 +1,4 @@
-import {PARTICIPANTS} from "../../../config/api";
+import {IMAGE_URL, PARTICIPANTS} from "../../../config/api";
 
 export async function updateParticipant(updateBody) {
     try {
@@ -12,6 +12,27 @@ export async function updateParticipant(updateBody) {
             },
             body: JSON.stringify(removeEmptyObjects(updateBody)),
         })
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
+}
+
+export async function downloadImage(imageUrl) {
+    try {
+        const apiBody = {
+            "url": imageUrl,
+            "thumbnail": true
+        }
+        const token = sessionStorage.getItem('token');
+        const response = await fetch(IMAGE_URL, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(removeEmptyObjects(apiBody)),
+        })
+        return await response.blob()
     } catch (error) {
         console.error("Error fetching data:", error.message);
     }

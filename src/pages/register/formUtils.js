@@ -41,8 +41,10 @@ export const formValidationSchema = yup.object().shape({
 });
 
 
-export async function formSubmit(data, handleRoute) {
+export async function formSubmit(data, handleRoute, setStatusMessage, setIsVisible, isLoading, setIsLoading) {
     console.log("formSubmit");
+    if (isLoading) return;
+    setIsLoading(true);
     try {
         const formData = new FormData();
         formData.append("name", data.name);
@@ -66,31 +68,35 @@ export async function formSubmit(data, handleRoute) {
             },
             body: formData,
         });
-
+        setIsLoading(false);
         if (response.ok) {
             const result = await response.json();
             console.log("result----------", result);
-            toast.success("Registration successful!");
-            handleRoute(data.contactNumber, true);
-            return;
+            setStatusMessage("Registration successful!");
+            setTimeout(() => {
+                setIsVisible(false);
+                handleRoute(data.contactNumber, true);
+            }, 3000)
+        } else {
+            switch (response.status) {
+                case 401:
+                    setStatusMessage("Registration is not permitted for your account.");
+                    break;
+                case 429:
+                    setStatusMessage("Too many requests. Please try again later.");
+                    break;
+                case 409:
+                    setStatusMessage("You are already registered. Please contact the Admin for assistance.");
+                    break;
+                default:
+                    setStatusMessage("Something went wrong while submitting the form");
+            }
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 5000)
         }
+        setIsVisible(true)
 
-        // Handle specific HTTP status codes
-        switch (response.status) {
-            case 401:
-                toast.error("Registration is not permitted for your account.");
-                break;
-            case 429:
-                toast.error("Too many requests. Please try again later.");
-                break;
-            case 409:
-                toast.error(
-                    "You are already registered. Please contact the Admin for assistance."
-                );
-                break;
-            default:
-                throw new Error("Something went wrong while submitting the form");
-        }
     } catch (error) {
         toast.error(error.message || "Registration failed. Please try again.");
     }

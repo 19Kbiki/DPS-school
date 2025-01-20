@@ -43,8 +43,13 @@ $transition: all 0.3s ease;
       letter-spacing: 0.05em;
       text-transform: uppercase;
 
-      &:first-child { border-top-left-radius: 0.5rem; }
-      &:last-child { border-top-right-radius: 0.5rem; }
+      &:first-child {
+        border-top-left-radius: 0.5rem;
+      }
+
+      &:last-child {
+        border-top-right-radius: 0.5rem;
+      }
     }
   }
 
@@ -184,13 +189,35 @@ $transition: all 0.3s ease;
     &--approve {
       background: linear-gradient(145deg, #10B981, #059669);
       color: white;
-      &:hover { transform: translateY(-2px); }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        background: linear-gradient(145deg, #6EE7B7, #34D399); // Muted green tones
+        color: #F3F4F6; // Light gray for text
+        cursor: not-allowed;
+        opacity: 0.6; // Adds transparency
+        transform: none; // Disable hover effect
+      }
     }
 
     &--reject {
       background: linear-gradient(145deg, #EF4444, #DC2626);
       color: white;
-      &:hover { transform: translateY(-2px); }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        background: linear-gradient(145deg, #FCA5A5, #F87171); // Muted red tones
+        color: #F3F4F6; // Light gray for text
+        cursor: not-allowed;
+        opacity: 0.6; // Adds a subtle transparency
+        transform: none; // Disable hover effect
+      }
     }
   }
 
@@ -218,8 +245,30 @@ $transition: all 0.3s ease;
       font-size: 1.5rem;
     }
 
-    //th:not(:first-child):not(:last-child),
-    //td:not(:first-child):not(:last-child) {
+    &__status-value {
+      display: none;
+    }
+
+    &__user-avatar {
+      display: none;
+    }
+
+    th:last-child {
+      display: none;
+    }
+
+    &__row {
+      td:last-child {
+        display: none;
+      }
+    }
+
+    //  th:first-child, td:first-child {
+    //  display: none;
+    //}
+
+    //th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)),
+    //td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
     //  display: none;
     //}
 
@@ -236,5 +285,41 @@ $transition: all 0.3s ease;
       width: 100%;
       justify-content: center;
     }
+  }
+
+  @media (max-width: 400px) {
+    &__table {
+      th {
+        font-size: 0.9rem;
+      }
+
+      td {
+        font-size: 0.8rem;
+      }
+
+      th:last-child {
+        display: none;
+      }
+    }
+
+    &__row {
+      td:last-child {
+        display: none;
+      }
+    }
+
+    &__section-title {
+      font-size: 0.8rem;
+    }
+    &__field {
+      &-label {
+        font-size: 0.8rem;
+      }
+
+      &-value {
+        font-size: 0.7rem;
+      }
+    }
+
   }
 }
