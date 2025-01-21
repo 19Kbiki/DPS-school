@@ -6,7 +6,6 @@
     .card {
         text-align: left;
         background: transparent;
-        border-radius: 5px;
         color: #fff; // Text color
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add shadow for dept
         border-radius: 10px;
@@ -24,15 +23,11 @@
             align-items: center;
             overflow: hidden;
 
-            h1 {
-                font-size: 65px;
-                // margin-bottom: 1rem;
+            h3 {
                 font-family: "Amaranth", serif;
                 background: linear-gradient(90deg, #FFEFB1, #C99A46);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-
-
             }
 
             .participant-table__status-value {
@@ -55,48 +50,36 @@
 @media screen and (max-width:568px) {
     .user-details {
         padding: 5rem 0;
-    
+
         .card {
             text-align: left;
             background: transparent;
-            border-radius: 5px;
             color: #fff; // Text color
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add shadow for dept
             border-radius: 10px;
             overflow: hidden;
             padding: 0;
-    
+
             .card-header {
-                position: relative;
-                background: #121C12;
-                border-radius: 10px !important;
-                margin-bottom: 2rem;
-                padding: 2rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column;
                 overflow: hidden;
-    
-                h1 {
-                    font-size: 36px;
-                    // margin-bottom: 1rem;
+
+                h3 {
                     font-family: "Amaranth", serif;
                     background: linear-gradient(90deg, #FFEFB1, #C99A46);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
-    
-    
                 }
-    
+
                 .participant-table__status-value {
                     padding: 0;
+                    display: block;
                 }
             }
-    
-    
+
             .card-body {
                 padding: 0;
-    
+
                 .participant-table__expand {
                     margin: 0;
                 }
