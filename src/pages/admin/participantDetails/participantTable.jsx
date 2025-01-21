@@ -273,9 +273,15 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                                         <MessageSquare size={18}/>
                                                         Remarks
                                                     </h3>
+                                                    {participant.approvedBy &&
+                                                        <div style={{marginBottom: "0.5rem", color:"#E0B757"}}>
+                                                            <span >Updated By: </span>
+                                                            <span style={{color:"#D9D9D9", fontStyle:"italic"}}>{participant.approvedBy}</span>
+                                                        </div>
+                                                    }
                                                     <ul className="participant-details__remarks">
                                                         {participant.remarks.map((remark, index) => (
-                                                            <li key={index}>{remark}</li>
+                                                            <li style={{color:"#d6d6d6"}} key={index}>{remark}</li>
                                                         ))}
                                                     </ul>
                                                 </div>
