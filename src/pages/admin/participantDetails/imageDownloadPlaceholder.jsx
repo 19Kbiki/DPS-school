@@ -17,11 +17,6 @@ const ImageDownloadPlaceholder = ({
             setIsLoading(false);
         } catch (error) {
             console.error('Download failed:', error);
-        } finally {
-            // Simulate minimum loading time
-            // setTimeout(() => {
-            //     setIsLoading(false);
-            // }, 2000);
         }
     };
 
