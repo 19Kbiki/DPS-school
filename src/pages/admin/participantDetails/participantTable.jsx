@@ -70,9 +70,9 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
     const handleRowClick = (index) => {
         if (expandedRow !== index) {
             const imageUrl = participants[index]?.paymentScreenshot
-            if (imageUrl && imageCache.current.has(imageUrl)) {
-                setPaymentSS(URL.createObjectURL(imageCache.current.get(imageUrl)));
-            }
+            setPaymentSS(imageUrl && imageCache.current.has(imageUrl)
+                    ? URL.createObjectURL(imageCache.current.get(imageUrl))
+                    : null)
         } else {
             setPaymentSS(null);
         }
@@ -260,8 +260,10 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                                             <ImageIcon size={18}/>
                                                             Payment Screenshot
                                                         </h3>
-                                                        <ImageDownloadPlaceholder paymentSS={paymentSS}
-                                                                                  onDownload={() => handleDownloadImage(participant.paymentScreenshot)}/>
+                                                        <ImageDownloadPlaceholder
+                                                            paymentSS={paymentSS}
+                                                            onDownload={() =>
+                                                                handleDownloadImage(participant.paymentScreenshot)}/>
                                                     </div>
                                                 )}
                                             </div>
@@ -324,7 +326,8 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                                         onClick={() => handleReject(participant)}
                                                     >
                                                         <X size={18}/>
-                                                        {isLoadingReject && (<CircularProgress size={20} color="#C99A46"/>)}
+                                                        {isLoadingReject && (
+                                                            <CircularProgress size={20} color="#C99A46"/>)}
                                                         Reject
                                                     </button>
                                                 </div>
