@@ -5,7 +5,7 @@ import React from "react";
 export function PackageSection({register, errors}) {
     return (
         <div className="form-section">
-            <h3>Packge</h3>
+            <h3>Package</h3>
             <FormControl component="fieldset" error={Boolean(errors.Package)}>
                 <RadioGroup row>
                     {createPackageRadioButton(register, "event", "4000 INR (Event)")}
