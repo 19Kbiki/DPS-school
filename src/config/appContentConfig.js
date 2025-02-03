@@ -8,7 +8,7 @@ export const heroSections = {
     title: {
         centreTagline: {top: "The great memories of school", main: "MEMORY LANE 2K25", bottom: "Nostalgia Feeling"},
         subTitle: "An independently organized event by the DPS Siliguri Alumni, Batches of 2008 and 2010",
-        footer: "Siliguri, 5th April 2025 / 10th May 2025"
+        footer: "Siliguri, 5th April 2025"
     },
     backgroundImage: "",
     buttons: [
