@@ -24,6 +24,7 @@ const UserDetails = () => {
     const [loading, setLoading] = useState(true);
     const [errorMsg, setErrorMsg] = useState(null);
     const {id} = useParams();
+
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString('en-US', {
             year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
@@ -51,7 +52,6 @@ const UserDetails = () => {
         }
     };
     console.log("userData==========", userData)
-    console.log(errorMsg);
 
     const getStatusClass = (status) => {
         switch (status?.toUpperCase()) {
@@ -80,126 +80,124 @@ const UserDetails = () => {
     }, []);
 
     return (
-        <>
-            <div className="user-details">
-                <div className="container">
-                    {loading && <CircularProgress size={50}/>}
-                    {errorMsg && <h2>{errorMsg}</h2>}
-                    {userData &&
-                        <div className="card">
-                            <div className="card-header">
-                                {/* <CheckCircle className="icon-success" /> */}
-                                <h3>{userData.name}</h3>
-                                <div>
+        <div className="user-details">
+            <div className="container">
+                {loading && <CircularProgress size={50}/>}
+                {errorMsg && <h2>{errorMsg}</h2>}
+                {userData &&
+                    <div className="card">
+                        <div className="card-header">
+                            {/* <CheckCircle className="icon-success" /> */}
+                            <h3>{userData.name}</h3>
+                            <div>
                             <span className={`participant-table__status  ${getStatusClass(userData.approvalStatus)}`}>
                                 {getStatusIcon(userData.approvalStatus)}
                                 <span className="participant-table__status-value">{userData.approvalStatus}
                                 </span>
                             </span>
-                                </div>
                             </div>
-                            <div className="card-body">
-                                <table style={{width: "100%"}}>
-                                    <tbody>
-                                    <tr>
-                                        <td colSpan="5" style={{position: 'relative'}}>
-                                            <div className="participant-table__expand" style={{position: 'relative'}}>
-                                                <div className="participant-table__expand-grid">
-                                                    {/* Personal Information */}
-                                                    <div className="participant-table__section">
-                                                        <h3 className="participant-table__section-title">
-                                                            <User size={18}/>
-                                                            Personal Information
-                                                        </h3>
-                                                        <div className="participant-table__section-content">
-                                                            <div className="participant-table__field">
+                        </div>
+                        <div className="card-body">
+                            <table style={{width: "100%"}}>
+                                <tbody>
+                                <tr>
+                                    <td colSpan="5" style={{position: 'relative'}}>
+                                        <div className="participant-table__expand" style={{position: 'relative'}}>
+                                            <div className="participant-table__expand-grid">
+                                                {/* Personal Information */}
+                                                <div className="participant-table__section">
+                                                    <h3 className="participant-table__section-title">
+                                                        <User size={18}/>
+                                                        Personal Information
+                                                    </h3>
+                                                    <div className="participant-table__section-content">
+                                                        <div className="participant-table__field">
                                                             <span
                                                                 className="participant-table__field-label">Email</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             <Mail size={16} className="inline mr-2"/> {userData.email}
                                                         </span>
-                                                            </div>
-                                                            <div className="participant-table__field">
+                                                        </div>
+                                                        <div className="participant-table__field">
                                                         <span className="participant-table__field-label">
                                                             Gender
                                                         </span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             <Users size={16} className="inline mr-2"/>{userData.gender}
                                                         </span>
-                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    {/* Contact Information */}
-                                                    <div className="participant-table__section">
-                                                        <h3 className="participant-table__section-title">
-                                                            <Phone size={18}/>
-                                                            Contact Information
-                                                        </h3>
-                                                        <div className="participant-table__section-content">
-                                                            <div className="participant-table__field">
+                                                {/* Contact Information */}
+                                                <div className="participant-table__section">
+                                                    <h3 className="participant-table__section-title">
+                                                        <Phone size={18}/>
+                                                        Contact Information
+                                                    </h3>
+                                                    <div className="participant-table__section-content">
+                                                        <div className="participant-table__field">
                                                             <span
                                                                 className="participant-table__field-label">Phone</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             +{userData.countryCode} {userData.contactNumber}
                                                         </span>
-                                                            </div>
-                                                            <div className="participant-table__field">
+                                                        </div>
+                                                        <div className="participant-table__field">
                                                             <span
                                                                 className="participant-table__field-label">Location</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             <MapPin size={16} className="inline mr-6"/>
-                                                                    {userData.city}, {userData.state}
+                                                                {userData.city}, {userData.state}
                                                         </span>
-                                                            </div>
-                                                            <div className="participant-table__field">
+                                                        </div>
+                                                        <div className="participant-table__field">
                                                             <span
                                                                 className="participant-table__field-label">Country</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             <Globe size={16} className="inline mr-2"/>
-                                                                    {userData.country}
+                                                                {userData.country}
                                                         </span>
-                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    {/* Registration Details */}
-                                                    <div className="participant-table__section">
-                                                        <h3 className="participant-table__section-title">
-                                                            <Building size={18}/>
-                                                            Registration Details
-                                                        </h3>
-                                                        <div className="participant-table__section-content">
-                                                            <div className="participant-table__field">
+                                                {/* Registration Details */}
+                                                <div className="participant-table__section">
+                                                    <h3 className="participant-table__section-title">
+                                                        <Building size={18}/>
+                                                        Registration Details
+                                                    </h3>
+                                                    <div className="participant-table__section-content">
+                                                        <div className="participant-table__field">
                                                             <span
                                                                 className="participant-table__field-label">Batch</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             Batch {userData.batch}
                                                         </span>
-                                                            </div>
-                                                            <div className="participant-table__field">
+                                                        </div>
+                                                        <div className="participant-table__field">
                                                         <span className="participant-table__field-label">
                                                             Registered On</span>
-                                                                <span className="participant-table__field-value">
+                                                            <span className="participant-table__field-value">
                                                             <Calendar size={16} className="inline mr-2"/>
-                                                                    {formatDate(userData.registeredOn)}</span>
+                                                                {formatDate(userData.registeredOn)}</span>
 
-                                                            </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
+
                                             </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
-        </>
+        </div>
     );
 };
 
