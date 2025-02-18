@@ -104,7 +104,7 @@ export const faqSection = {
         },
         {
             q: "Who’s our go-to person when we’re lost ?",
-            a: "Sourabh Dutta: +91 9632321371, Akul Saurabh: +91 9968336459, Anshika Gupta +91 9832120066, Pia Nandi +91 6294298332, Piyush Singhal +91 8904735217"
+            a: "Akul Saurav: +91-9968336459, Paridhi Gupta +91-9971295648, Sourabh Dutta: +91-9632321371,  Arka Sarkar: +91-7679172285"
         },
         {
             q: "Can I bring a plus one, or is it a solo mission?",

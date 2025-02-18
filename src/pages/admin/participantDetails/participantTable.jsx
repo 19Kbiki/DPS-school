@@ -71,8 +71,8 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
         if (expandedRow !== index) {
             const imageUrl = participants[index]?.paymentScreenshot
             setPaymentSS(imageUrl && imageCache.current.has(imageUrl)
-                    ? URL.createObjectURL(imageCache.current.get(imageUrl))
-                    : null)
+                ? URL.createObjectURL(imageCache.current.get(imageUrl))
+                : null)
         } else {
             setPaymentSS(null);
         }
@@ -129,6 +129,13 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
         }
     }
 
+    const toTitleCase = (str) => {
+        return str
+            .split(" ") // Split by spaces
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter
+            .join(" "); // Join back into a string
+    };
+
     return (
         <div className="participant-table">
             <h1 className="participant-table__header">Participant Management</h1>
@@ -151,7 +158,7 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <User size={20} className="text-[#C99A46] participant-table__user-avatar"/>
-                                        {participant.name}
+                                        {toTitleCase(participant.name)}
                                     </div>
                                 </td>
                                 <td>
@@ -274,14 +281,17 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                                         Remarks
                                                     </h3>
                                                     {participant.approvedBy &&
-                                                        <div style={{marginBottom: "0.5rem", color:"#E0B757"}}>
-                                                            <span >Updated By: </span>
-                                                            <span style={{color:"#D9D9D9", fontStyle:"italic"}}>{participant.approvedBy}</span>
+                                                        <div style={{marginBottom: "0.5rem", color: "#E0B757"}}>
+                                                            <span>Updated By: </span>
+                                                            <span style={{
+                                                                color: "#D9D9D9",
+                                                                fontStyle: "italic"
+                                                            }}>{participant.approvedBy}</span>
                                                         </div>
                                                     }
                                                     <ul className="participant-details__remarks">
                                                         {participant.remarks.map((remark, index) => (
-                                                            <li style={{color:"#d6d6d6"}} key={index}>{remark}</li>
+                                                            <li style={{color: "#d6d6d6"}} key={index}>{remark}</li>
                                                         ))}
                                                     </ul>
                                                 </div>
@@ -368,7 +378,7 @@ const ParticipantManagement = () => {
 
             switch (response.status) {
                 case 401:
-                    toast.error("Registration is not permitted for your account.");
+                    toast.error("Login Expired! Try to re-login");
                     navigate(ROUTES.LOGIN);
                     break;
                 default:
@@ -387,7 +397,28 @@ const ParticipantManagement = () => {
                         ...item,
                         approvalStatus: item['approvalStatus'] || APPROVAL_STATUS.AWAITING_APPROVAL,
                         remarks: item['remarks'] || [],
-                    }));
+                    }))
+                    .sort((a, b) => {
+                        // Push test users to the end
+                        const isTestUserA = a.name.toLowerCase().includes("test user");
+                        const isTestUserB = b.name.toLowerCase().includes("test user");
+
+                        if (isTestUserA && !isTestUserB) return 1;  // Move "test user" down
+                        if (!isTestUserA && isTestUserB) return -1; // Keep non-test users above
+                        // First, prioritize "AWAITING_APPROVAL"
+                        if (a.approvalStatus === APPROVAL_STATUS.AWAITING_APPROVAL && b.approvalStatus !== APPROVAL_STATUS.AWAITING_APPROVAL) {
+                            return -1;
+                        }
+                        if (a.approvalStatus !== APPROVAL_STATUS.AWAITING_APPROVAL && b.approvalStatus === APPROVAL_STATUS.AWAITING_APPROVAL) {
+                            return 1;
+                        }
+                        const dateComparison = new Date(a.registeredOn) - new Date(b.registeredOn);
+                        if (dateComparison !== 0) {
+                            return dateComparison;
+                        }
+
+                        return 0; // If all conditions are equal, maintain order
+                    });
             setParticipants(formattedData);
         } catch (error) {
             console.error("Error fetching data:", error);
