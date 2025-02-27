@@ -19,7 +19,8 @@ export const formValidationSchema = yup.object().shape({
     batch: yup.string()
         .required("Batch is required"),
     Package: yup.string()
-        .required("Please select Package"),
+        .default("event"),
+        // .required("Please select Package"),
     city: yup.string()
         .required("City is required"),
     state: yup.string()
@@ -32,7 +33,6 @@ export const formValidationSchema = yup.object().shape({
     paymentScreenshot: yup.mixed()
         .required("Payment screenshot is required")
         .test("fileType", "Only images are allowed", function (value) {
-            console.log(value);
             return value && value[0] ? ["image/jpeg", "image/png"].includes(value[0].type) : false;
         }),
     password: yup.string()
@@ -42,7 +42,6 @@ export const formValidationSchema = yup.object().shape({
 
 
 export async function formSubmit(data, handleRoute, setStatusMessage, setIsVisible, isLoading, setIsLoading) {
-    console.log("formSubmit");
     if (isLoading) return;
     setIsLoading(true);
     try {
@@ -70,8 +69,6 @@ export async function formSubmit(data, handleRoute, setStatusMessage, setIsVisib
         });
         setIsLoading(false);
         if (response.ok) {
-            const result = await response.json();
-            console.log("result----------", result);
             setStatusMessage("Registration successful!");
             setTimeout(() => {
                 setIsVisible(false);

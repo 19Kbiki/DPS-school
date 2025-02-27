@@ -45,14 +45,11 @@ const UserDetails = () => {
                     setErrorMsg("Unknown Error");
             }
         } catch (err) {
-            console.log(err);
             setErrorMsg(err.message);
         } finally {
             setLoading(false);
         }
     };
-    console.log("userData==========", userData)
-
     const getStatusClass = (status) => {
         switch (status?.toUpperCase()) {
             case 'APPROVED':

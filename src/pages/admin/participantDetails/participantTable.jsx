@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
     AlertCircle,
+    BedDouble,
+    BedSingle,
     Building,
     Calendar,
     Check,
@@ -13,6 +15,7 @@ import {
     Mail,
     MapPin,
     MessageSquare,
+    PartyPopper,
     Phone,
     User,
     Users,
@@ -27,6 +30,8 @@ import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../../App";
 import {CircularProgress, Typography} from "@mui/material";
 import ImageDownloadPlaceholder from "./imageDownloadPlaceholder";
+import {Packages} from "../../register/components/packageSection";
+
 
 const ParticipantTable = ({participants, onApprove, onReject}) => {
     const imageCache = useRef(new Map());
@@ -53,6 +58,17 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                 return 'participant-table__status--pending';
             default:
                 return 'participant-table__status--rejected';
+        }
+    };
+
+    const getPackageIcon = (pkg) => {
+        switch (pkg.toUpperCase()) {
+            case Packages.EVENT_AND_STAY_ON_SINGLE_BASIS.value.toUpperCase():
+                return <><PartyPopper size={16}/>  <BedSingle size={16}/></>;
+            case Packages.EVENT_AND_STAY_ON_TWIN_BASIS.value.toUpperCase():
+                return <><PartyPopper size={16}/>  <BedDouble size={16}/></>;
+            default:
+                return <PartyPopper size={16}/>;
         }
     };
 
@@ -117,14 +133,11 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
     };
 
     const handleDownloadImage = async (imageUrl) => {
-        console.log(`Image Cache ${imageCache} ${imageCache.current.has(imageUrl)}`);
         if (imageCache.current.has(imageUrl)) {
             setPaymentSS(URL.createObjectURL(imageCache.current.get(imageUrl)));
-            console.log(`Loading images from cache...`);
         } else {
             const imageBlob = await downloadImage(imageUrl);
             imageCache.current.set(imageUrl, imageBlob);
-            console.log(`Image Cache ${imageCache} ${imageCache.current.has(imageUrl)}`);
             setPaymentSS(URL.createObjectURL(imageBlob));
         }
     }
@@ -159,6 +172,7 @@ const ParticipantTable = ({participants, onApprove, onReject}) => {
                                     <div className="flex items-center gap-3">
                                         <User size={20} className="text-[#C99A46] participant-table__user-avatar"/>
                                         {toTitleCase(participant.name)}
+                                        <span style={{marginLeft:'0.2rem',color:"gray"}}>{getPackageIcon(participant.pkg)}</span>
                                     </div>
                                 </td>
                                 <td>
@@ -388,7 +402,6 @@ const ParticipantManagement = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("data----------", data)
             const formattedData =
                 data
                     .filter(item => item.name)
@@ -397,6 +410,7 @@ const ParticipantManagement = () => {
                         ...item,
                         approvalStatus: item['approvalStatus'] || APPROVAL_STATUS.AWAITING_APPROVAL,
                         remarks: item['remarks'] || [],
+                        pkg: item['package'] || Packages.EVENT.value
                     }))
                     .sort((a, b) => {
                         // Push test users to the end
@@ -435,7 +449,6 @@ const ParticipantManagement = () => {
     };
 
     const handleUpdate = async (participant, approvalStatus, remarks) => {
-        console.log(remarks);
         let updateBody = {
             contactNumber: participant.contactNumber,
             approvalStatus: approvalStatus,
@@ -445,7 +458,6 @@ const ParticipantManagement = () => {
         if (remarks && remarks.trim().length > 0) {
             updateBody['remarks'] = [...(participant.remarks || []), remarks];
         }
-        console.log(updateBody);
         await updateParticipant(updateBody);
         await fetchData();
     }

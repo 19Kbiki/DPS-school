@@ -28,6 +28,8 @@ export function createPackageRadioButton(register, value, label) {
             control={
                 <Radio
                     sx={{
+                        transform: "scale(0.8)",
+                        fontSize: "0.7rem",
                         color: "#E0B757", // Default color
                         "&.Mui-checked": {
                             color: "#E0B757", // Checked color
@@ -35,7 +37,7 @@ export function createPackageRadioButton(register, value, label) {
                     }}
                 />
             }
-            label={label}
+            label={<span style={{ fontSize: "0.8rem" }}>{label}</span>}
             {...register("Package", { required: "Select your Package" })}
         />
     );

@@ -8,7 +8,7 @@ export const heroSections = {
     title: {
         centreTagline: {top: "The great memories of school", main: "MEMORY LANE 2K25", bottom: "Nostalgia Feeling"},
         subTitle: "An independently organized event by the DPS Siliguri Alumni, Batches of 2008 and 2010",
-        footer: "Siliguri, 10th May 2025"
+        footer: "Hiland Hotel, Siliguri, 10th May 2025"
     },
     backgroundImage: "",
     buttons: [
@@ -56,10 +56,10 @@ export const memoryLaneExpSection = {
 
 export const locationsSection = {
     title: "LOCATION",
-    hotelName: "Siliguri",
-    hotelAddress: "Hill Cart Rd, Ward 6, Siliguri, West Bengal 734001",
-    roomName: "Conference Room",
-    roomAddress: "Address, Siliguri, 560103",
+    hotelName: "Hiland Hotel",
+    hotelAddress: "PRM, Sevoke Rd, Ward 43, Dasrath Pally, Bhanu Nagar, Siliguri, West Bengal 734001",
+    roomName: "Lime Leaf",
+    roomAddress: "1st Floor",
     image: ""
 }
 
@@ -96,7 +96,7 @@ export const faqSection = {
         },
         {
             q: "Are we getting a cozy spot to crash for the event?",
-            a: "Yes, staying overnight is optional. If you need accommodation, please select the Event +Stay option during registration. This will help us determine how many rooms are required. We’re aiming for double occupancy rooms, and this option is available to all, not just those traveling from outside. Please note, the stay covers check-in on the 5th April’25 and check-out on the 6th April’25"
+            a: "Staying overnight is optional. If you need accommodation, please mark ‘Accommodation Required’ while registering and select the option that suits you best. We have 30 rooms available, allocated on a first-come, first-served basis. Both single and double occupancy options are available. The stay covers check-in on 10th May 2025 and check-out on 11th May 2025."
         },
         {
             q: "Will a chariot (or cab) whisk us away from NJP or Bagdogra? ",

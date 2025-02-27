@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import "./register.scss"
@@ -31,7 +31,10 @@ const RegisterForm = () => {
         formState: {errors},
         watch,
         setValue
-    } = useForm({resolver: yupResolver(formValidationSchema),});
+    } = useForm({
+        defaultValues: {Package: 'event'},
+        resolver: yupResolver(formValidationSchema),
+    });
 
 
     return (
@@ -45,12 +48,15 @@ const RegisterForm = () => {
             </div>
 
             <div className="container">
-                <form className="form-container" onSubmit={handleSubmit((data) => formSubmit(data, handleRoute, setStatusMessage, setIsVisible, isLoading, setIsLoading))}>
+                <form className="form-container" onSubmit={handleSubmit(
+                    (data) =>
+                        formSubmit(data, handleRoute, setStatusMessage, setIsVisible, isLoading, setIsLoading))
+                }>
                     <PersonalDetails register={register} errors={errors}/>
                     <BatchSection register={register} errors={errors}/>
                     <AddressSection register={register} errors={errors}/>
                     <PaymentSection/>
-                    <PackageSection register={register} errors={errors}/>
+                    <PackageSection register={register} errors={errors} watch={watch} setValue={setValue}/>
                     <PaymentSSSection register={register} errors={errors} watch={watch} setValue={setValue}/>
                     <SecuritySection register={register} errors={errors}/>
                     {isVisible && (
@@ -70,7 +76,7 @@ const RegisterForm = () => {
                         </Typography>
                     )}
                     <div className="register-button">
-                        <button type="submit" >
+                        <button type="submit">
                             {isLoading && (<CircularProgress size={20} color="#C99A46"/>)}
                             Register
                         </button>
